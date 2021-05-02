@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 
+
 public class GenerationFunctions : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -37,9 +38,59 @@ public class GenerationFunctions : MonoBehaviour
     }
 
 
-    public void Generate()
+    public float[,] createHeightMapPerlinNoise(int x, int y)
     {
-        float[,] heightmap = createHeightMapRandom(10, 10);
+        float rnd1 = Random.value*100;
+        float rnd2 = Random.value*100;
+        float scale = 1;
+
+        float[,] heightmap = new float[x, y];
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                heightmap[i, j] = Mathf.PerlinNoise(rnd1+(i*scale),rnd2+(j*scale));
+            }
+        }
+
+
+        return heightmap;
+    }
+
+
+
+
+
+    public void GenerateRandom()
+    {
+
+        string xinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text;
+        string yinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text;
+
+
+        int x = int.Parse(xinput);
+        int y = int.Parse(yinput);
+
+
+        float[,] heightmap = createHeightMapRandom(x, y);
+
+        print(heightmap);
+
+        var colors = GetComponent<UnityEngine.UI.Button>().colors;
+        colors.pressedColor = Color.red;
+
+        GetComponent<UnityEngine.UI.Button>().colors = colors;
+
+        debugHeightMap(heightmap);
+
+
+    }
+
+
+    public void GeneratePerlinNoise()
+    {
+        float[,] heightmap = createHeightMapPerlinNoise(10, 10);
 
         print(heightmap);
 
