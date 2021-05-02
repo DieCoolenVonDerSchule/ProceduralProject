@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - sizex
+  - sizey
+  - scalex
+  - scaley
+  - shiftx
+  - shifty
   layers:
   - Default
   - TransparentFX
