@@ -22,7 +22,7 @@ public class GenerationFunctions : MonoBehaviour
     }
 
 
-    public float[,] createHeightMapRandom(int x, int y)
+    public static float[,] createHeightMapRandom(int x, int y)
     {
         float[,] heightmap = new float[x, y];
 
@@ -47,21 +47,26 @@ public class GenerationFunctions : MonoBehaviour
     // InputField[1] -> shift x
     // InputField[0] -> shift y
 
-    public float[,] createHeightMapPerlinNoise(int x, int y)
+    public static float[,] createHeightMapPerlinNoise(int x, int y)
     {
 
-        
 
-        int shiftInputX = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[4].text);
-        int shiftInputY = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[5].text);
+
+        //  int shiftInputX = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[4].text);
+        //  int shiftInputY = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[5].text);
+
+        int shiftInputX = int.Parse(GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text);
+        int shiftInputY = int.Parse(GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text);
 
 
         float shiftx = Random.value*shiftInputX;
         float shifty = Random.value*shiftInputY;
 
-        string scaleInputX = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text;
-        string scaleInputY = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text;
+        // string scaleInputX = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text;
+        // string scaleInputY = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text;
 
+        string scaleInputX = GameObject.FindGameObjectWithTag("scalex").GetComponent<UnityEngine.UI.InputField>().text;
+        string scaleInputY = GameObject.FindGameObjectWithTag("scaley").GetComponent<UnityEngine.UI.InputField>().text;
 
         float scalex = float.Parse(scaleInputX);
         float scaley = float.Parse(scaleInputY);
@@ -94,10 +99,11 @@ public class GenerationFunctions : MonoBehaviour
     public void GenerateRandom()
     {
 
-        string xinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[3].text;
-        string yinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[2].text;
+        //string xinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[3].text;
+        //string yinput = GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[2].text;
 
-        //string xinput2 = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
+        string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
+        string yinput = GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text;
 
 
         int x = int.Parse(xinput);
@@ -109,11 +115,15 @@ public class GenerationFunctions : MonoBehaviour
         print(heightmap);
 
         var colors = GetComponent<UnityEngine.UI.Button>().colors;
-        colors.pressedColor = Color.red;
+        colors.pressedColor = Color.green;
 
         GetComponent<UnityEngine.UI.Button>().colors = colors;
 
-        debugHeightMap(heightmap);
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            debugHeightMap(heightmap);
+        }
+        
 
 
     }
@@ -121,16 +131,31 @@ public class GenerationFunctions : MonoBehaviour
 
     public void GeneratePerlinNoise()
     {
-        float[,] heightmap = createHeightMapPerlinNoise(10, 10);
+
+        string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
+        string yinput = GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text;
+
+
+        int x = int.Parse(xinput);
+        int y = int.Parse(yinput);
+
+
+        float[,] heightmap = createHeightMapPerlinNoise(x, y);
 
         print(heightmap);
 
         var colors = GetComponent<UnityEngine.UI.Button>().colors;
-        colors.pressedColor = Color.red;
+        colors.pressedColor = Color.green;
 
         GetComponent<UnityEngine.UI.Button>().colors = colors;
 
-        debugHeightMap(heightmap);
+
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            debugHeightMap(heightmap);
+        }
+
+        GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh();
 
 
     }

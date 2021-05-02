@@ -13,15 +13,23 @@ public class ButtonSetDefault : MonoBehaviour
     // InputField[0] -> shift y
 
 
-    void setDefault()
+    public void setDefault()
     {
 
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[5].text = "10";
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[4].text = "10";
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[3].text = "1.0";
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[2].text = "1.0";
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text = "0";
-        GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text = "0";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[5].text = "10";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[4].text = "10";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[3].text = "1.0";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[2].text = "1.0";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text = "0";
+        // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text = "0";
+
+        GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "10";
+        GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text = "10";
+        GameObject.FindGameObjectWithTag("scalex").GetComponent<UnityEngine.UI.InputField>().text = "1.0";
+        GameObject.FindGameObjectWithTag("scaley").GetComponent<UnityEngine.UI.InputField>().text = "1.0";
+        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "0";
+        GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "0";
+
 
 
     }

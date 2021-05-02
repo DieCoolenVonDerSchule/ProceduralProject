@@ -10,6 +10,12 @@ TagManager:
   - scaley
   - shiftx
   - shifty
+  - scalexslider
+  - scaleyslider
+  - shiftxslider
+  - shiftyslider
+  - debugtoggle
+  - MeshGenerator
   layers:
   - Default
   - TransparentFX
