@@ -23,8 +23,8 @@ public class ButtonSetDefault : MonoBehaviour
         // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[1].text = "0";
         // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text = "0";
 
-        GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "10";
-        GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text = "10";
+        GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "50";
+        GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text = "50";
         GameObject.FindGameObjectWithTag("scalex").GetComponent<UnityEngine.UI.InputField>().text = "1.0";
         GameObject.FindGameObjectWithTag("scaley").GetComponent<UnityEngine.UI.InputField>().text = "1.0";
         GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "0";

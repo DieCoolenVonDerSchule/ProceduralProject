@@ -169,7 +169,6 @@ public class GenerationFunctions : MonoBehaviour
             for (int j = 0; j < map.GetLength(1); j++)
             {
                 print(map[i,j]);
-
             }
             
 
