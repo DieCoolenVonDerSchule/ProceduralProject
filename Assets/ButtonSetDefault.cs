@@ -29,7 +29,8 @@ public class ButtonSetDefault : MonoBehaviour
         GameObject.FindGameObjectWithTag("scaley").GetComponent<UnityEngine.UI.InputField>().text = "1.0";
         GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "0";
         GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "0";
-
+        GameObject.FindGameObjectWithTag("spreadx").GetComponent<UnityEngine.UI.InputField>().text = "1";
+        GameObject.FindGameObjectWithTag("spready").GetComponent<UnityEngine.UI.InputField>().text = "1";
 
 
     }

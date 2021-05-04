@@ -29,7 +29,7 @@ public class MeshGenerator : MonoBehaviour
         int x = int.Parse(xinput);
         int y = int.Parse(yinput);
 
-        heightMap = GenerationFunctions.createHeightMapPerlinNoise(x, y);
+        heightMap = GenerationFunctions.createHeightMapPerlinNoise(x, y, 1);
 
         createShape();
         updateMesh();

@@ -47,10 +47,8 @@ public class GenerationFunctions : MonoBehaviour
     // InputField[1] -> shift x
     // InputField[0] -> shift y
 
-    public static float[,] createHeightMapPerlinNoise(int x, int y)
+    public static float[,] createHeightMapPerlinNoise(int x, int y, int mapcount)
     {
-
-
 
         //  int shiftInputX = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[4].text);
         //  int shiftInputY = int.Parse(GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[5].text);
@@ -71,20 +69,27 @@ public class GenerationFunctions : MonoBehaviour
         float scalex = float.Parse(scaleInputX);
         float scaley = float.Parse(scaleInputY);
 
+        string spreadInputX = GameObject.FindGameObjectWithTag("spreadx").GetComponent<UnityEngine.UI.InputField>().text;
+        string spreadInputY = GameObject.FindGameObjectWithTag("spready").GetComponent<UnityEngine.UI.InputField>().text;
+        float spreadx = float.Parse(spreadInputX);
+        float spready = float.Parse(spreadInputY);
 
-       
+
+
 
         //TEST
         // GameObject.FindObjectsOfType<UnityEngine.UI.InputField>()[0].text = "0";
 
 
         float[,] heightmap = new float[x, y];
+            
+
 
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                heightmap[i, j] = Mathf.PerlinNoise(shiftx+(i*scalex),shifty+(j*scaley));
+                heightmap[i, j] = Mathf.PerlinNoise((shiftx+(mapcount*spreadx))+(i*scalex),(shifty+(mapcount*spready))+(j*scaley));
             }
         }
 
@@ -94,7 +99,7 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-
+   
 
     public void GenerateRandom()
     {
@@ -139,10 +144,12 @@ public class GenerationFunctions : MonoBehaviour
         int x = int.Parse(xinput);
         int y = int.Parse(yinput);
 
+        int mapcount = 2;
 
-        float[,] heightmap = createHeightMapPerlinNoise(x, y);
+        float[,] heightmap1 = createHeightMapPerlinNoise(x, y, mapcount-1);
+        float[,] heightmap2 = createHeightMapPerlinNoise(x, y, mapcount);
 
-        print(heightmap);
+        
 
         var colors = GetComponent<UnityEngine.UI.Button>().colors;
         colors.pressedColor = Color.green;
@@ -152,7 +159,8 @@ public class GenerationFunctions : MonoBehaviour
 
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
-            debugHeightMap(heightmap);
+            debugHeightMap(heightmap1);
+            debugHeightMap(heightmap2);
         }
 
         GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh();
@@ -160,19 +168,47 @@ public class GenerationFunctions : MonoBehaviour
 
     }
 
+    
 
     public void debugHeightMap(float[,] map)
     {
+        float lowestHeight = 100;
+        float highestHeight = 0;
+        float lowestStep = 100;
+        float highestStep = 0;
+        float step = 0;
+        float lastHeight = 0;
+
 
         for (int i=0; i<map.GetLength(0); i++)
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
                 print(map[i,j]);
+
+                if (map[i, j] < lowestHeight) lowestHeight = map[i, j];
+                if (map[i, j] > highestHeight) highestHeight = map[i, j];
+
+                step = (map[i, j] - lastHeight);
+                if (step < 0) step = step * (-1);
+
+                if (step < lowestStep) lowestStep = step;
+                if (step > highestStep) highestStep = step;
+
+
+                
             }
             
 
         }
+
+        print("------------------------");
+        print("Lowest : " + lowestHeight);
+        print("Highest: " +highestHeight);
+        print("------------------------");
+        print("Lowest Step : " + lowestStep);
+        print("Highest Step: " + highestStep);
+        print("------------------------");
 
     }
 

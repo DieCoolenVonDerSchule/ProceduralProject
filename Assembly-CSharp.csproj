@@ -71,6 +71,8 @@
     <Compile Include="Assets\scaleSetY.cs" />
     <Compile Include="Assets\shiftSetX.cs" />
     <Compile Include="Assets\shiftSetY.cs" />
+    <Compile Include="Assets\speadSetX.cs" />
+    <Compile Include="Assets\spreadSetY.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -16,6 +16,10 @@ TagManager:
   - shiftyslider
   - debugtoggle
   - MeshGenerator
+  - spreadxslider
+  - spreadyslider
+  - spreadx
+  - spready
   layers:
   - Default
   - TransparentFX
