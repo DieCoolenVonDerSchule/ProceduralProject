@@ -163,6 +163,17 @@ public class GenerationFunctions : MonoBehaviour
             debugHeightMap(heightmap2);
         }
 
+
+        float[,] heightmap = createHeightMapRandom(x,y);
+
+        for (int i=0; i<x; i++)
+        {
+            for (int j=0; j<y; i++)
+            {
+                heightmap[i, j] = heightmap1[i, j] + heightmap2[i, j];          // INDEX OUT OF BOUNDS
+            }
+        }
+
         GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh();
 
 
