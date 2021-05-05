@@ -164,8 +164,9 @@ public class GenerationFunctions : MonoBehaviour
         }
 
 
+        // MAPS VERRECHNEN
         float[,] heightmap = createHeightMapRandom(x,y);
-
+        
         for (int i=0; i<x; i++)
         {
             for (int j=0; j<y; i++)
@@ -173,8 +174,8 @@ public class GenerationFunctions : MonoBehaviour
                 heightmap[i, j] = heightmap1[i, j] + heightmap2[i, j];          // INDEX OUT OF BOUNDS
             }
         }
-
-        GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh();
+        
+        GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh(heightmap1);
 
 
     }

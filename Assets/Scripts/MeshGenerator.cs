@@ -17,7 +17,7 @@ public class MeshGenerator : MonoBehaviour
         
     }
 
-    public void generateMesh()
+    public void generateMesh(float[,] map)
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
@@ -29,7 +29,8 @@ public class MeshGenerator : MonoBehaviour
         int x = int.Parse(xinput);
         int y = int.Parse(yinput);
 
-        heightMap = GenerationFunctions.createHeightMapPerlinNoise(x, y, 1);
+        heightMap = map;
+        //heightMap = GenerationFunctions.createHeightMapPerlinNoise(x, y, 1);
 
         createShape();
         updateMesh();
