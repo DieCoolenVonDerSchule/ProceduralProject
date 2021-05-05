@@ -20,6 +20,8 @@ TagManager:
   - spreadyslider
   - spreadx
   - spready
+  - outputslider
+  - output
   layers:
   - Default
   - TransparentFX

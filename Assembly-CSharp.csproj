@@ -67,8 +67,8 @@
     <Compile Include="Assets\ButtonSetDefault.cs" />
     <Compile Include="Assets\Scripts\GenerationFunctions.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
+    <Compile Include="Assets\outputSet.cs" />
     <Compile Include="Assets\scaleSetX.cs" />
-    <Compile Include="Assets\scaleSetY.cs" />
     <Compile Include="Assets\shiftSetX.cs" />
     <Compile Include="Assets\shiftSetY.cs" />
     <Compile Include="Assets\speadSetX.cs" />

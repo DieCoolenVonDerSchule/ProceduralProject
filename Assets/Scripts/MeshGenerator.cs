@@ -21,16 +21,12 @@ public class MeshGenerator : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
-        string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
-        string yinput = GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text;
-
-
-        int x = int.Parse(xinput);
-        int y = int.Parse(yinput);
+      
 
         heightMap = map;
-        //heightMap = GenerationFunctions.createHeightMapPerlinNoise(x, y, 1);
+       
 
         createShape();
         updateMesh();
@@ -69,10 +65,13 @@ public class MeshGenerator : MonoBehaviour
 
                 vert++;
                 tris += 6;
+
+                
             }
 
             vert++;
         }
+        print("vert: " + vert);
     }
 
     void updateMesh()
