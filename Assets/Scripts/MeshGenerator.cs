@@ -9,6 +9,8 @@ public class MeshGenerator : MonoBehaviour
     Vector3[] vertices;
     float[,] heightMap;
     int[] triangles;
+    Color[] colors;
+    public Gradient gradient;
 
 
     // Start is called before the first frame update
@@ -24,9 +26,6 @@ public class MeshGenerator : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-
-
-
       
 
         heightMap = map;
@@ -42,14 +41,29 @@ public class MeshGenerator : MonoBehaviour
         int y = heightMap.GetLength(1)-1;
         vertices = new Vector3[(x+1) * (y+1)];
 
-        int k = 0;
-        for(int i = 0; i<y+1; i++)
+        string outputInput = GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text;
+        float output = float.Parse(outputInput);
+
+
+        for (int k = 0, i = 0; i<y+1; i++)
         {
             for(int j = 0; j<x+1; j++)
             {
-                vertices[k] = new Vector3(j, heightMap[j, i]*2f, i);
+                vertices[k] = new Vector3(j, heightMap[j, i], i);
                 k++;
             }
+        }
+
+        colors = new Color[vertices.Length];
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            colors[i] = gradient.Evaluate(vertices[i].y);
+        }
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i].y = vertices[i].y * output;
         }
 
         triangles = new int[x * y * 6];
@@ -76,6 +90,8 @@ public class MeshGenerator : MonoBehaviour
             vert++;
         }
 
+        
+
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
             print("vert: " + vert);
@@ -89,6 +105,7 @@ public class MeshGenerator : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.colors = colors;
 
         mesh.RecalculateNormals();
 

@@ -210,24 +210,23 @@ public class GenerationFunctions : MonoBehaviour
         }
 
         float highest = 0;
+        float lowest = 10000;
 
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                if (Mathf.Abs(heightmapCombined[i, j]) > highest) highest = Mathf.Abs(heightmapCombined[i, j]);
+                if (heightmapCombined[i, j] > highest) highest = heightmapCombined[i, j];
+                if (heightmapCombined[i, j] < lowest) lowest = heightmapCombined[i, j];
             }
         }
 
         
-        string outputInput = GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text;
-        float output = float.Parse(outputInput);
-        
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                heightmapCombined[i, j] = output * (heightmapCombined[i, j] / highest ) ;
+                heightmapCombined[i, j] = Mathf.InverseLerp(lowest, highest, heightmapCombined[i, j]);
             }
         }
 
