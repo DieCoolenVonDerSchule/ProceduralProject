@@ -22,6 +22,7 @@ public class ButtonSetDefault : MonoBehaviour
         GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text = "1";
 
         GameObject.FindGameObjectWithTag("maps").GetComponent<UnityEngine.UI.InputField>().text = "5";
+        GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text = "1";
 
     }
 }

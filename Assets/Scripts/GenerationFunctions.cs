@@ -26,13 +26,19 @@ public class GenerationFunctions : MonoBehaviour
     void Update()
     {
 
+
         if (GameObject.FindGameObjectWithTag("movetoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
+
+            string speedInput = GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text;
+            int speed = int.Parse(speedInput);
+
+
             timer += Time.deltaTime;
 
-            if (timer >= 1f)
+            if (timer >= 1f / speed)
             {
-                timer -= 1f;
+                timer -= 1f / speed;
                 moveUp();
             }
 
@@ -293,38 +299,51 @@ public class GenerationFunctions : MonoBehaviour
 
     public void moveUp()
     {
-
         string step = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
 
         int shiftstep = int.Parse(step);
         shiftstep++;
 
-
         GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
 
-
         GeneratePerlinNoise();
-
-
-
     }
 
 
     public void moveDown()
     {
-
         string step = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
 
         int shiftstep = int.Parse(step);
         shiftstep--;
 
-
         GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
 
+        GeneratePerlinNoise();
+    }
+
+
+    public void moveLeft()
+    {
+        string step = GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text;
+
+        int shiftstep = int.Parse(step);
+        shiftstep--;
+
+        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
 
         GeneratePerlinNoise();
+    }
 
+    public void moveRight()
+    {
+        string step = GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text;
 
+        int shiftstep = int.Parse(step);
+        shiftstep++;
 
+        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
+
+        GeneratePerlinNoise();
     }
 }
