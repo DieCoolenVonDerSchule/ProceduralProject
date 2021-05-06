@@ -22,6 +22,8 @@ TagManager:
   - output
   - maps
   - menu
+  - movetoggle
+  - canvas
   layers:
   - Default
   - TransparentFX

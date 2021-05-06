@@ -19,9 +19,13 @@ public class MeshGenerator : MonoBehaviour
 
     public void generateMesh(float[,] map)
     {
+        Destroy(GetComponent<MeshFilter>().mesh);
+
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+
+
 
       
 
@@ -71,7 +75,12 @@ public class MeshGenerator : MonoBehaviour
 
             vert++;
         }
-        print("vert: " + vert);
+
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            print("vert: " + vert);
+        }
+            
     }
 
     void updateMesh()
@@ -82,5 +91,7 @@ public class MeshGenerator : MonoBehaviour
         mesh.triangles = triangles;
 
         mesh.RecalculateNormals();
+
+
     }
 }

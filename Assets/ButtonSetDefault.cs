@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class ButtonSetDefault : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // InputField[5] -> array size X
-    // InputField[4] -> array size Y
-    // InputField[3] -> perlin scale X
-    // InputField[2] -> perlin scale Y
-    // InputField[1] -> shift x
-    // InputField[0] -> shift y
-
+  
 
     public void setDefault()
     {
