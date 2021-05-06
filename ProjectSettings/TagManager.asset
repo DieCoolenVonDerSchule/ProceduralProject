@@ -7,11 +7,9 @@ TagManager:
   - sizex
   - sizey
   - scalex
-  - scaley
   - shiftx
   - shifty
   - scalexslider
-  - scaleyslider
   - shiftxslider
   - shiftyslider
   - debugtoggle
@@ -22,6 +20,8 @@ TagManager:
   - spready
   - outputslider
   - output
+  - maps
+  - menu
   layers:
   - Default
   - TransparentFX

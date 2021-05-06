@@ -165,8 +165,11 @@ public class GenerationFunctions : MonoBehaviour
         }
 
 
+        string mapsinput = GameObject.FindGameObjectWithTag("maps").GetComponent<UnityEngine.UI.InputField>().text;
+        int mapcount = int.Parse(mapsinput);
 
-        int mapcount = 5;
+
+
         float[][,] heightmaps = new float[mapcount][,];
 
        
