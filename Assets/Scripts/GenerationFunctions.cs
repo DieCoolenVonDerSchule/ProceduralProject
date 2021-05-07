@@ -12,7 +12,30 @@ public class GenerationFunctions : MonoBehaviour
 
     public static Vector2[] startwerte;
     float timer = 0f;
-    
+    public ComputeShader shader;
+
+    struct PerlinInfo
+    {
+        int x;
+        int y;
+        float scale;
+        float startx;
+        float starty;
+        float shiftx;
+        float shifty;
+
+        public PerlinInfo(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+        {
+            this.x = x;
+            this.y = y;
+            this.scale = scale;
+            this.startx = startx;
+            this.starty = starty;
+            this.shiftx = shiftx;
+            this.shifty = shifty;
+        }
+    };
+
 
 
     // Start is called before the first frame update
@@ -88,13 +111,58 @@ public class GenerationFunctions : MonoBehaviour
     }
 
 
-
-    public static float[,] createHeightMapPerlinNoise(int x, int y, float scale, float startx, float starty)
+    public float[,] createHeightMapPerlinNoiseCS(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
 
-      
-        float shiftx = float.Parse(GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text);
-        float shifty = float.Parse(GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text);
+        print("START");
+
+        PerlinInfo[] data = new PerlinInfo[x * y];
+        float[] output = new float[x * y];
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                data[i * y + j] = new PerlinInfo ( x, y, scale, startx, starty, shiftx+i, shifty+j);
+            }
+        }
+
+        ComputeBuffer buffer = new ComputeBuffer(data.Length, 28);
+        buffer.SetData(data);
+        ComputeBuffer outputBuffer = new ComputeBuffer(output.Length, 4);
+        outputBuffer.SetData(output);
+
+
+        int kernel = shader.FindKernel("computeHeightMap");
+        shader.SetBuffer(kernel, "dataBuffer", buffer);
+        shader.SetBuffer(kernel, "output", outputBuffer);
+        shader.Dispatch(kernel, data.Length/32, 1, 1);
+        outputBuffer.GetData(output);
+
+        buffer.Dispose();
+        outputBuffer.Dispose();
+
+
+        float[,] heightmap = new float[x, y];
+
+
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                heightmap[i, j] = output[i * y + j];
+            }
+        }
+
+        print("END");
+
+        return heightmap;
+    }
+
+
+    public static float[,] createHeightMapPerlinNoise(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+    {
            
        
     
@@ -106,7 +174,7 @@ public class GenerationFunctions : MonoBehaviour
         {
             for (int j = 0; j < y; j++)
             {
-                heightmap[i, j] = (Mathf.PerlinNoise(startx+(shiftx+i)*scale, starty+(shifty+j) * scale)*2)-1;
+                heightmap[i, j] = Mathf.PerlinNoise(startx+(shiftx+i)*scale, starty+(shifty+j) * scale);
             }
         }
 
@@ -192,11 +260,14 @@ public class GenerationFunctions : MonoBehaviour
 
         float[][,] heightmaps = new float[mapcount][,];
 
-       
+
+
+        float shiftx = float.Parse(GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text);
+        float shifty = float.Parse(GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text);
 
         for (int i=0; i<mapcount; i++)
         {
-            heightmaps[i] = createHeightMapPerlinNoise(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y);
+            heightmaps[i] = createHeightMapPerlinNoiseCS(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y, shiftx, shifty);
         }
 
 
