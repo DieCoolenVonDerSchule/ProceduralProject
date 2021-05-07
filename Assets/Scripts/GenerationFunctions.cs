@@ -52,13 +52,17 @@ public class GenerationFunctions : MonoBehaviour
 
     public static void initializeConstants(int mapcount)
     {
-        startwerte = new Vector2[mapcount];
+        
+
+
             
         if (startwerte == null)
         {
+            startwerte = new Vector2[mapcount];
             for (int i = 0; i < mapcount; i++)
             {
                 startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
+                
             }
 
 
@@ -345,4 +349,27 @@ public class GenerationFunctions : MonoBehaviour
 
         GeneratePerlinNoise();
     }
+
+
+
+    public void randomize()
+    {
+
+       
+        for (int i = 0; i < startwerte.Length; i++)
+        {
+           
+            startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
+            
+        }
+
+
+        GeneratePerlinNoise();
+
+
+
+
+
+    }
+
 }
