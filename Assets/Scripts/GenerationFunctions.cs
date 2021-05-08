@@ -265,9 +265,14 @@ public class GenerationFunctions : MonoBehaviour
         float shiftx = float.Parse(GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text);
         float shifty = float.Parse(GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text);
 
+        bool isOn = (GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
+
+
         for (int i=0; i<mapcount; i++)
         {
-            heightmaps[i] = createHeightMapPerlinNoiseCS(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y, shiftx, shifty);
+            
+            if (isOn) heightmaps[i] = createHeightMapPerlinNoiseCS(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y, shiftx, shifty);
+            else heightmaps[i] = createHeightMapPerlinNoise(x, y, scale * Mathf.Pow(i + 1, coarse), startwerte[i].x, startwerte[i].y, shiftx, shifty);
         }
 
 

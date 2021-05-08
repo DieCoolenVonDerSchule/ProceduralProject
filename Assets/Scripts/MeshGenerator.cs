@@ -7,6 +7,7 @@ public class MeshGenerator : MonoBehaviour
 {
     Mesh mesh;
     Vector3[] vertices;
+    Vector2[] uvs;
     float[,] heightMap;
     int[] triangles;
     Color[] colors;
@@ -90,9 +91,23 @@ public class MeshGenerator : MonoBehaviour
             vert++;
         }
 
-        
+        uvs = new Vector2[vertices.Length];
 
-        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+
+        for (int i = 0, k = 0; i < y; i++)
+        {
+
+            for (int j = 0; j < x; j++)
+            {
+                uvs[k] = new Vector2((float)j/(x*0.01f), (float)i/(y*0.01f));
+                k++;
+
+            }
+        }
+
+
+
+                if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
             print("vert: " + vert);
         }
@@ -106,8 +121,12 @@ public class MeshGenerator : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
+        mesh.uv = uvs;
 
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
         mesh.RecalculateNormals();
+        
 
 
     }
