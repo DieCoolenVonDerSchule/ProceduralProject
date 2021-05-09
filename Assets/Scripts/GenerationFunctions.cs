@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Collections;
+using Unity.Jobs;
 
 
 
@@ -14,15 +16,15 @@ public class GenerationFunctions : MonoBehaviour
     float timer = 0f;
     public ComputeShader shader;
 
-    struct PerlinInfo
+    public struct PerlinInfo
     {
-        int x;
-        int y;
-        float scale;
-        float startx;
-        float starty;
-        float shiftx;
-        float shifty;
+        public int x;
+        public int y;
+        public float scale;
+        public float startx;
+        public float starty;
+        public float shiftx;
+        public float shifty;
 
         public PerlinInfo(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
         {
@@ -36,7 +38,17 @@ public class GenerationFunctions : MonoBehaviour
         }
     };
 
+    public struct generatePerlinJob : IJobParallelFor
+    {
+        public NativeArray<PerlinInfo> perlinInfoArray;
+        public NativeArray<float> perlinOutput;
 
+        public void Execute(int index)
+        {
+            var data = perlinInfoArray[index];
+            perlinOutput[index] = Mathf.PerlinNoise(data.startx + (data.shiftx) * data.scale, data.starty + (data.shifty) * data.scale);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -183,8 +195,47 @@ public class GenerationFunctions : MonoBehaviour
     }
 
 
+    public static float[,] createHeightMapPerlinNoiseJobs(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+    {
 
-   
+        var perlinInfoArray = new NativeArray<PerlinInfo>(x * y, Allocator.Persistent);
+        var output = new NativeArray<float>(x * y, Allocator.Persistent);
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                perlinInfoArray[i * y + j] = new PerlinInfo(x, y, scale, startx, starty, shiftx + i, shifty + j);
+            }
+        }
+
+        var job = new generatePerlinJob
+        {
+            perlinInfoArray = perlinInfoArray,
+            perlinOutput = output
+        };
+
+        var jobHandle = job.Schedule(x * y, 1);
+        jobHandle.Complete();
+
+        float[,] heightmap = new float[x, y];
+
+
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                heightmap[i, j] = output[i * y + j];
+            }
+        }
+
+        perlinInfoArray.Dispose();
+        output.Dispose();
+
+        return heightmap;
+    }
+
 
     public void GenerateRandom()
     {
@@ -271,7 +322,7 @@ public class GenerationFunctions : MonoBehaviour
         for (int i=0; i<mapcount; i++)
         {
             
-            if (isOn) heightmaps[i] = createHeightMapPerlinNoiseCS(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y, shiftx, shifty);
+            if (isOn) heightmaps[i] = createHeightMapPerlinNoiseJobs(x, y, scale * Mathf.Pow(i+1,coarse),startwerte[i].x, startwerte[i].y, shiftx, shifty);
             else heightmaps[i] = createHeightMapPerlinNoise(x, y, scale * Mathf.Pow(i + 1, coarse), startwerte[i].x, startwerte[i].y, shiftx, shifty);
         }
 

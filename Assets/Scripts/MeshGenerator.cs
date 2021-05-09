@@ -12,7 +12,19 @@ public class MeshGenerator : MonoBehaviour
     int[] triangles;
     Color[] colors;
     public Gradient gradient;
+    public ComputeShader shader;
 
+    struct SquareInfo
+    {
+        int vert;
+        int x;
+
+        public SquareInfo(int vert, int x)
+        {
+            this.vert = vert;
+            this.x = x;
+        }
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -69,27 +81,35 @@ public class MeshGenerator : MonoBehaviour
 
         triangles = new int[x * y * 6];
         int vert = 0;
-        int tris = 0;
 
-        for(int i = 0; i<y; i++)
+        SquareInfo[] data = new SquareInfo[x * y];
+
+        for (int i = 0; i < y; i++)
         {
-            for(int j = 0; j<x; j++)
+            for (int j = 0; j < x; j++)
             {
-                triangles[tris] = vert;
-                triangles[tris + 1] = vert + x + 1;
-                triangles[tris + 2] = vert + 1;
-                triangles[tris + 3] = vert + 1;
-                triangles[tris + 4] = vert + x + 1;
-                triangles[tris + 5] = vert + x + 2;
+
+                data[i*x+j] = new SquareInfo(vert, x);
 
                 vert++;
-                tris += 6;
-
-                
             }
 
             vert++;
         }
+
+        ComputeBuffer buffer = new ComputeBuffer(data.Length, 8);
+        buffer.SetData(data);
+        ComputeBuffer outputBuffer = new ComputeBuffer(triangles.Length, 4);
+        outputBuffer.SetData(triangles);
+
+        int kernel = shader.FindKernel("generateMesh");
+        shader.SetBuffer(kernel, "dataBuffer", buffer);
+        shader.SetBuffer(kernel, "output", outputBuffer);
+        shader.Dispatch(kernel, data.Length / 32, 1, 1);
+        outputBuffer.GetData(triangles);
+
+        buffer.Dispose();
+        outputBuffer.Dispose();
 
         uvs = new Vector2[vertices.Length];
 
