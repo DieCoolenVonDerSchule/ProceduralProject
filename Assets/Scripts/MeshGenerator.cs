@@ -146,6 +146,8 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateBounds();
         mesh.RecalculateTangents();
         mesh.RecalculateNormals();
+
+        print("BERECHNET");
         
 
 

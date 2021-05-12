@@ -26,6 +26,7 @@ TagManager:
   - canvas
   - speed
   - shadertoggle
+  - threadingtoggle
   layers:
   - Default
   - TransparentFX
