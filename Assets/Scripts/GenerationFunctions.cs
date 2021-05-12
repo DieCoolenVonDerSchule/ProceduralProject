@@ -50,12 +50,7 @@ public class GenerationFunctions : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-
-    }
+   
 
     // Update is called once per frame
     void Update()
@@ -78,9 +73,7 @@ public class GenerationFunctions : MonoBehaviour
             }
 
         }
-
-
-            
+           
         
     }
 
@@ -88,9 +81,6 @@ public class GenerationFunctions : MonoBehaviour
     public static void initializeConstants(int mapcount)
     {
         
-
-
-            
         if (startwerte == null)
         {
             startwerte = new Vector2[mapcount];
@@ -99,7 +89,6 @@ public class GenerationFunctions : MonoBehaviour
                 startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
                 
             }
-
 
         }
 
@@ -126,7 +115,7 @@ public class GenerationFunctions : MonoBehaviour
     public float[,] createHeightMapPerlinNoiseCS(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
 
-        print("START");
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("START COMPUTE SHADER");
 
         PerlinInfo[] data = new PerlinInfo[x * y];
         float[] output = new float[x * y];
@@ -167,7 +156,7 @@ public class GenerationFunctions : MonoBehaviour
             }
         }
 
-        print("END");
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("END COMPUTE SHADER");
 
         return heightmap;
     }
@@ -175,13 +164,10 @@ public class GenerationFunctions : MonoBehaviour
 
     public static float[,] createHeightMapPerlinNoise(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
-           
-       
-    
+            
         float[,] heightmap = new float[x, y];
 
-        
-
+       
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -239,29 +225,21 @@ public class GenerationFunctions : MonoBehaviour
 
     public void GenerateRandom()
     {
-
      
         string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
         string yinput = GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text;
 
-
         int x = int.Parse(xinput);
         int y = int.Parse(yinput);
 
-
         float[,] heightmap = createHeightMapRandom(x, y);
 
-        
-
-        
 
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
             debugHeightMap(heightmap);
         }
         
-
-
     }
 
 
@@ -269,24 +247,21 @@ public class GenerationFunctions : MonoBehaviour
     public void GeneratePerlinNoise()
     {
 
-        
-
         string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
         string yinput = GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text;
-
 
         int x = int.Parse(xinput);
         int y = int.Parse(yinput);
 
-        string scaleInput = GameObject.FindGameObjectWithTag("scalex").GetComponent<UnityEngine.UI.InputField>().text;
+        string scaleInput = GameObject.FindGameObjectWithTag("scale").GetComponent<UnityEngine.UI.InputField>().text;
         float scale = float.Parse(scaleInput);
 
-
-        string coarseInput = GameObject.FindGameObjectWithTag("spreadx").GetComponent<UnityEngine.UI.InputField>().text;
-        string contributionInput = GameObject.FindGameObjectWithTag("spready").GetComponent<UnityEngine.UI.InputField>().text;
+        string coarseInput = GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text;
+        string contributionInput = GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text;
 
         float coarse = float.Parse(coarseInput);
         float contribution = float.Parse(contributionInput);
+
 
 
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
@@ -302,22 +277,17 @@ public class GenerationFunctions : MonoBehaviour
         int mapcount = int.Parse(mapsinput);
 
 
-        
         initializeConstants(mapcount);
 
 
-        
-        
-
         float[][,] heightmaps = new float[mapcount][,];
-
-
 
         float shiftx = float.Parse(GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text);
         float shifty = float.Parse(GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text);
 
         bool shaderIsOn = (GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
         bool threadingIsOn = (GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
+
 
 
         for (int i=0; i<mapcount; i++)
@@ -363,22 +333,15 @@ public class GenerationFunctions : MonoBehaviour
             }
         }
 
-        
-
+       
 
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
-            debugHeightMap(heightmapCombined);
-            
+            debugHeightMap(heightmapCombined);          
         }
 
 
-        
-
         GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh(heightmapCombined);
-
-
-        
 
     }
 
@@ -408,11 +371,8 @@ public class GenerationFunctions : MonoBehaviour
 
                 if (step < lowestStep) lowestStep = step;
                 if (step > highestStep) highestStep = step;
-
-
                 
-            }
-            
+            }         
 
         }
 
@@ -484,18 +444,49 @@ public class GenerationFunctions : MonoBehaviour
     public void randomize()
     {
 
-       
         for (int i = 0; i < startwerte.Length; i++)
         {
-           
             startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
-            
         }
 
-
         GeneratePerlinNoise();
+    }
 
 
+
+    public void randomHeightmap()                   // RANDOM PN MAP ERSTELLEN
+    {
+        float scale = Random.Range(0.0f, 0.1f);
+        float coarse = Random.Range(0.0f, 2.0f);
+        float contrib = Random.Range(0.0f, 10.0f);
+
+        float output = Random.Range(2.0f, 8.0f);
+
+
+        GameObject.FindGameObjectWithTag("scale").GetComponent<UnityEngine.UI.InputField>().text = "" + scale;
+        GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text = "" + coarse;
+        GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text = "" + contrib;
+        GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text = "" + output;
+
+
+        GameObject.FindGameObjectWithTag("scaleslider").GetComponent<UnityEngine.UI.Slider>().value = scale;
+        GameObject.FindGameObjectWithTag("coarseslider").GetComponent<UnityEngine.UI.Slider>().value = coarse;
+        GameObject.FindGameObjectWithTag("contribslider").GetComponent<UnityEngine.UI.Slider>().value = contrib;
+        GameObject.FindGameObjectWithTag("outputslider").GetComponent<UnityEngine.UI.Slider>().value = output;
+
+
+
+
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            print("RANDOM GENERATED PN:");
+            print("--------------------");
+            print("Scale:   " + scale);
+            print("Coarse:  " + coarse);
+            print("Contrib: " + contrib);
+            print("Output:  " + output);
+
+        }
 
 
 

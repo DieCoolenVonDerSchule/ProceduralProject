@@ -127,11 +127,9 @@ public class MeshGenerator : MonoBehaviour
 
 
 
-                if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
-        {
-            print("vert: " + vert);
-        }
-            
+                if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("vert: " + vert);
+
+
     }
 
     void updateMesh()
@@ -147,7 +145,7 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateTangents();
         mesh.RecalculateNormals();
 
-        print("BERECHNET");
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("MESH BERECHNET");
         
 
 

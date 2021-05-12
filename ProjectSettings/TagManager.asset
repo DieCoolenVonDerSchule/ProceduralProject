@@ -27,6 +27,12 @@ TagManager:
   - speed
   - shadertoggle
   - threadingtoggle
+  - coarse
+  - contrib
+  - coarseslider
+  - contribslider
+  - scaleslider
+  - scale
   layers:
   - Default
   - TransparentFX

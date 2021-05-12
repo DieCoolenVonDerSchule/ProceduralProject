@@ -64,17 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BtnMenu.cs" />
-    <Compile Include="Assets\ButtonSetDefault.cs" />
     <Compile Include="Assets\Scripts\GenerationFunctions.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
-    <Compile Include="Assets\cstoggle.cs" />
-    <Compile Include="Assets\outputSet.cs" />
-    <Compile Include="Assets\scaleSetX.cs" />
-    <Compile Include="Assets\shiftSetX.cs" />
-    <Compile Include="Assets\shiftSetY.cs" />
-    <Compile Include="Assets\speadSetX.cs" />
-    <Compile Include="Assets\spreadSetY.cs" />
+    <Compile Include="Assets\Scripts\UiFunctions.cs" />
     <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
     <None Include="Assets\Scripts\noiseSimplex.cginc" />
     <None Include="Assets\Scripts\MeshGenerationComputeShader.compute" />
