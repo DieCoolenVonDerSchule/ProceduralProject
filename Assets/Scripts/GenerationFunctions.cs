@@ -343,6 +343,21 @@ public class GenerationFunctions : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh(heightmapCombined);
 
+        
+
+
+
+        //INPUT AUSLESEN
+        float plantscale = 1.0f;
+
+        if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            DecorationFunctions.placePlants(heightmapCombined, plantscale);
+        }
+
+            
+
+
     }
 
     
