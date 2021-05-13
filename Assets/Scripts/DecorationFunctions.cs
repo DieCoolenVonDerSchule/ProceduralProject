@@ -76,4 +76,54 @@ public class DecorationFunctions : MonoBehaviour
 
 
     }
+
+
+    public static void placePlants2(float[,] heightmap, float scale)
+    {
+
+
+        int x = heightmap.GetLength(0);
+        int y = heightmap.GetLength(1);
+
+
+        float plantProbability = 0.001f;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
+        float plantHeightMax = 0.5f;    // maximale höhe damit pflanze wachsen kann (0 bis 1)
+        float plantHeightMin = 0.0f;    // minimale höhe damit pflanze wachsen kann (0 bis 1)
+
+
+
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+
+
+                if (Random.value < plantProbability && heightmap[i,j]<plantHeightMax && heightmap[i,j]>plantHeightMin) seedPlants(i, j, heightmap); 
+                        
+                        
+
+            }
+        }
+
+
+
+    }
+
+
+    public static void seedPlants(int i, int j, float[,] heightmap)
+    {
+
+        int seedRadius = 3;            // Radius der Verbreitung der Pflanze  (1 bis mapsize)
+        float seedProbability = 0.2f;    // Wahrscheinlichkeit der Verbreitung  (0 bis 1)
+
+
+        putPlant(i, j, heightmap[i,j]);
+        if (Random.value < seedProbability) seedPlants(i-seedRadius, j, heightmap);
+        if (Random.value < seedProbability) seedPlants(i+seedRadius, j, heightmap);
+        if (Random.value < seedProbability) seedPlants(i, j-seedRadius, heightmap);
+        if (Random.value < seedProbability) seedPlants(i, j+seedRadius, heightmap);
+
+
+    }
 }

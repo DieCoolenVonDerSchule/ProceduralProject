@@ -347,12 +347,14 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-        //INPUT AUSLESEN
+        //----------------------------------------------------------------------------------INPUT AUSLESEN
         float plantscale = 1.0f;
 
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
-            DecorationFunctions.placePlants(heightmapCombined, plantscale);
+
+            //    PFLANZEN PLATZIEREN
+            DecorationFunctions.placePlants2(heightmapCombined, plantscale);
         }
 
             
