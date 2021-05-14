@@ -176,32 +176,8 @@ public class UiFunctions : MonoBehaviour
     public void setPreset()
     {
 
-        switch (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value)
-        {
-           case 0:
-                print("PRESET 0");
-
-                
-                
-
-
-                break;
-
-
-           case 1:
-                print("PRESET 1");
-
-
-                break;
-
-
-            case 2:
-                print("PRESET 2");
-
-
-                break;
-
-        }
+       // switch (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value)
+        
 
 
 

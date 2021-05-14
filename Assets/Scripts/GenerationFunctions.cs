@@ -360,8 +360,9 @@ public class GenerationFunctions : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
 
+
             //    PFLANZEN PLATZIEREN
-            DecorationFunctions.placePlants2(heightmapCombined, plantscale, plantProbability, "Baum");
+            GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale);
 
 
         }

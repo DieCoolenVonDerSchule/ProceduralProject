@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class DecorationFunctions : MonoBehaviour
 {
+
+    ArrayList plantList;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        plantList = new ArrayList();
         
     }
 
@@ -17,9 +22,17 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
+    public GameObject toPlace;
 
-    public static void placePlants (float[,] heightmap, float scale)
+
+    public void placePlants (float[,] heightmap, float scale)
     {
+
+        foreach (GameObject plant in plantList)
+        {
+            Destroy(plant);
+
+        }
 
         int x = heightmap.GetLength(0);
         int y = heightmap.GetLength(1);
@@ -48,7 +61,7 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public static void putPlant(int x, int y, float height)
+    public void putPlant(int x, int y, float height)
     {
 
 
@@ -65,10 +78,18 @@ public class DecorationFunctions : MonoBehaviour
         float scaleY = GameObject.FindGameObjectWithTag("MeshGenerator").transform.localScale.z;
 
 
-        
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-        sphere.transform.position = new Vector3(x*scaleX+offsetX, height*scaleHeight*output+offsetHeight, y*scaleY+offsetY);
+        //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+        //sphere.transform.position = new Vector3(x*scaleX+offsetX, height*scaleHeight*output+offsetHeight, y*scaleY+offsetY);
+
+
+        toPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+
+        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.identity));
+
+
 
         
 
@@ -78,7 +99,7 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public static void placePlants2(float[,] heightmap, float scale, float plantProbability, string typ)
+    public void placePlants2(float[,] heightmap, float scale, float plantProbability, string typ)
     {
 
         float plantHeightMax = 0.5f;    // maximale höhe damit pflanze wachsen kann (0 bis 1)
@@ -124,7 +145,7 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public static void seedPlants(int i, int j, float[,] heightmap)
+    public void seedPlants(int i, int j, float[,] heightmap)
     {
 
         int seedRadius = 3;            // Radius der Verbreitung der Pflanze  (1 bis mapsize)
