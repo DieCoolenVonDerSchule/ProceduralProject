@@ -35,6 +35,9 @@ TagManager:
   - scale
   - plantstoggle
   - heightmapbutton
+  - plantscale
+  - plantscaleslider
+  - presets
   layers:
   - Default
   - TransparentFX

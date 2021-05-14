@@ -21,6 +21,8 @@ public class UiFunctions : MonoBehaviour
         int maps = 5;
         int speed = 1;
 
+        float plantscale = 1.0f;
+
 
         GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "" + sizex;
         GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text = "" + sizey;
@@ -41,6 +43,8 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("outputslider").GetComponent<UnityEngine.UI.Slider>().value = output;
         GameObject.FindGameObjectWithTag("shiftxslider").GetComponent<UnityEngine.UI.Slider>().value = shiftx;
         GameObject.FindGameObjectWithTag("shiftyslider").GetComponent<UnityEngine.UI.Slider>().value = shifty;
+
+        GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text = "" + plantscale;
     }
 
 
@@ -128,6 +132,20 @@ public class UiFunctions : MonoBehaviour
     }
 
 
+    public void setPlantscale()     // Plantscale wird per Slider verändert
+    {
+        GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text =
+            GameObject.FindGameObjectWithTag("plantscaleslider").GetComponent<UnityEngine.UI.Slider>().value.ToString();
+    }
+
+    public void setPlantscaleField()     // Plantscale wird per Field verändert
+    {
+        string plantscaleStr = GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text;
+        float plantscaleSet = float.Parse(plantscaleStr);
+        GameObject.FindGameObjectWithTag("plantscaleslider").GetComponent<UnityEngine.UI.Slider>().value = plantscaleSet;
+    }
+
+
 
     public void toggleMenu()      // Münü an-aus schalten
     {
@@ -155,6 +173,47 @@ public class UiFunctions : MonoBehaviour
 
 
 
+    public void setPreset()
+    {
+
+        switch (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value)
+        {
+           case 0:
+                print("PRESET 0");
+
+                
+                
+
+
+                break;
+
+
+           case 1:
+                print("PRESET 1");
+
+
+                break;
+
+
+            case 2:
+                print("PRESET 2");
+
+
+                break;
+
+        }
+
+
+
+
+
+        if (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value == 1)
+        {
+            print("VALUE 1");
+        }
+
+
+    }
 
     
 

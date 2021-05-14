@@ -78,18 +78,31 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public static void placePlants2(float[,] heightmap, float scale)
+    public static void placePlants2(float[,] heightmap, float scale, float plantProbability, string typ)
     {
+
+        float plantHeightMax = 0.5f;    // maximale höhe damit pflanze wachsen kann (0 bis 1)
+        float plantHeightMin = 0.0f;    // minimale höhe damit pflanze wachsen kann (0 bis 1)
+
+
+        if (typ=="Baum")
+        {
+            plantHeightMax = 0.4f;
+            plantHeightMin = 0.0f;
+        }
+
+
+        if (typ == "Blume")
+        {
+            plantHeightMax = 0.8f;
+            plantHeightMin = 0.0f;
+        }
+
+
 
 
         int x = heightmap.GetLength(0);
         int y = heightmap.GetLength(1);
-
-
-        float plantProbability = 0.001f;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
-        float plantHeightMax = 0.5f;    // maximale höhe damit pflanze wachsen kann (0 bis 1)
-        float plantHeightMin = 0.0f;    // minimale höhe damit pflanze wachsen kann (0 bis 1)
-
 
 
 

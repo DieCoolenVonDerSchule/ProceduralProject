@@ -343,18 +343,27 @@ public class GenerationFunctions : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh(heightmapCombined);
 
-        
+
 
 
 
         //----------------------------------------------------------------------------------INPUT AUSLESEN
-        float plantscale = 1.0f;
+        float plantscale = float.Parse(GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text);
+        // float plantscale = 1.0f;
+
+
+        float plantProbability = 0.001f;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
+        
+
+
 
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
 
             //    PFLANZEN PLATZIEREN
-            DecorationFunctions.placePlants2(heightmapCombined, plantscale);
+            DecorationFunctions.placePlants2(heightmapCombined, plantscale, plantProbability, "Baum");
+
+
         }
 
             
