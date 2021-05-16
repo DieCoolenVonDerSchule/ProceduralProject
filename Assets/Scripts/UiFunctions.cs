@@ -1,9 +1,82 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
+
+
+
+
+
+
+
+public class Preset
+{
+    public string _name;
+
+    public float _scale;
+    public float _coarse;
+    public float _contrib;
+    public float _output;
+
+    public float _plantscale;
+    public float _occurance;
+    public float _radius;
+
+    public bool _shader;
+    public bool _threading;
+    public bool _plants;
+
+
+    public Preset(string name, float scale, float coarse, float contrib, float output, float plantscale, float occurance, float radius, bool shader, bool threading, bool plants)
+    {
+        _name = name;
+        _scale = scale;
+        _coarse = coarse;
+        _contrib = contrib;
+        _output = output;
+        _plantscale = plantscale;
+        _occurance = occurance;
+        _radius = radius;
+        _shader = shader;
+        _threading = threading;
+        _plants = plants;
+    }
+
+
+}
+
 
 public class UiFunctions : MonoBehaviour
 {
+
+
+    public static List<Preset> presets;
+
+
+
+    public void Start()
+    {
+        if (presets == null) initialize();
+
+    }
+
+    public static void initialize()
+    {
+
+        presets = new List<Preset>();
+        GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().ClearOptions();
+
+
+    }
+
+
+   
+
+    
+    
+
 
 
     public void setDefault()       // Setzen der Standartwerte
@@ -21,7 +94,9 @@ public class UiFunctions : MonoBehaviour
         int maps = 5;
         int speed = 1;
 
-        float plantscale = 1.0f;
+        float plantscale = 0.5f;
+        float occurance = 0.2f;
+        int seedradius = 10;
 
 
         GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "" + sizex;
@@ -45,6 +120,12 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("shiftyslider").GetComponent<UnityEngine.UI.Slider>().value = shifty;
 
         GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text = "" + plantscale;
+        GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text = "" + occurance;
+        GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text = "" + seedradius;
+
+        GameObject.FindGameObjectWithTag("plantscaleslider").GetComponent<UnityEngine.UI.Slider>().value = plantscale;
+        GameObject.FindGameObjectWithTag("occuranceslider").GetComponent<UnityEngine.UI.Slider>().value = occurance;
+        GameObject.FindGameObjectWithTag("seedradiusslider").GetComponent<UnityEngine.UI.Slider>().value = seedradius;
     }
 
 
@@ -146,6 +227,33 @@ public class UiFunctions : MonoBehaviour
     }
 
 
+    public void setOccurance()     // Seedscale wird per Slider verändert
+    {
+        GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text =
+            GameObject.FindGameObjectWithTag("occuranceslider").GetComponent<UnityEngine.UI.Slider>().value.ToString();
+    }
+
+    public void setOccuranceField()     // Occurance wird per Field verändert
+    {
+        string occuranceStr = GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text;
+        float occuranceSet = float.Parse(occuranceStr);
+        GameObject.FindGameObjectWithTag("occuranceslider").GetComponent<UnityEngine.UI.Slider>().value = occuranceSet;
+    }
+
+
+    public void setSeedradius()     // Seedradius wird per Slider verändert
+    {
+        GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text =
+            GameObject.FindGameObjectWithTag("seedradiusslider").GetComponent<UnityEngine.UI.Slider>().value.ToString();
+    }
+
+    public void setSeedradiusField()     // Seedradius wird per Field verändert
+    {
+        string seedradiusStr = GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text;
+        float seedradiusSet = float.Parse(seedradiusStr);
+        GameObject.FindGameObjectWithTag("seedradiusslider").GetComponent<UnityEngine.UI.Slider>().value = seedradiusSet;
+    }
+
 
     public void toggleMenu()      // Münü an-aus schalten
     {
@@ -176,22 +284,134 @@ public class UiFunctions : MonoBehaviour
     public void setPreset()
     {
 
-       // switch (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value)
+        
+
+        int p = GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value;
+
+        print("set p# = " + p);
+
+
+       
+
+        GameObject.FindGameObjectWithTag("scale").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._scale;
+
+        
+        GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._coarse;
+        GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._contrib;
+        GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._output;
+      
+
+        GameObject.FindGameObjectWithTag("scaleslider").GetComponent<UnityEngine.UI.Slider>().value = presets[p]._scale;
+        GameObject.FindGameObjectWithTag("coarseslider").GetComponent<UnityEngine.UI.Slider>().value = presets[p]._coarse;
+        GameObject.FindGameObjectWithTag("contribslider").GetComponent<UnityEngine.UI.Slider>().value = presets[p]._contrib;
+        GameObject.FindGameObjectWithTag("outputslider").GetComponent<UnityEngine.UI.Slider>().value = presets[p]._output;
+   
+        GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._plantscale;
+        GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._occurance;
+        GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._radius;
         
 
 
 
 
 
-        if (GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value == 1)
-        {
-            print("VALUE 1");
-        }
+    }
 
+    public void savePreset()
+    {
+
+        string name = GameObject.FindGameObjectWithTag("presetname").GetComponent<UnityEngine.UI.InputField>().text;
+
+        float scale = float.Parse(GameObject.FindGameObjectWithTag("scale").GetComponent<UnityEngine.UI.InputField>().text);
+        float coarse = float.Parse(GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text);
+        float contrib = float.Parse(GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text);
+        float output = float.Parse(GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text);
+
+        float plantscale = float.Parse(GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text);
+        float occurance = float.Parse(GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text);
+        float seedradius = float.Parse(GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text);
+
+        bool shader = GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn;
+        bool threading = GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn;
+        bool plants = GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn;
+
+
+
+        Preset p = new Preset(name, scale, coarse, contrib, output, plantscale, occurance, seedradius, shader, threading, plants);
+
+
+        print("save p# = " +p);
+        presets.Add(p);
+
+
+
+
+
+        UnityEngine.UI.Dropdown.OptionData newoption = new UnityEngine.UI.Dropdown.OptionData(name); 
+
+
+        GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.Add(newoption);
+
+    }
+    
+
+    public void deletePreset()
+    {
+
+        int p = GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().value;
+
+        print("delete p# = "+p);
+
+
+        presets.RemoveAt(p);
+
+        
+        GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.RemoveAt(p);
 
     }
 
-    
+
+
+
+    public void writeFile()
+    {
+
+        if (File.Exists(Application.dataPath + "/presets.json")) File.Delete("/presets.json");
+
+
+
+        string savedata = JsonUtility.ToJson(presets);
+       
+
+
+        print(savedata);
+
+        File.WriteAllText(Application.dataPath + "/presets.json" ,savedata);
+               
+
+    }
+
+    public void readFile()
+    {
+
+        if (File.Exists(Application.dataPath + "/presets.json"))
+        {
+            File.Delete("/presets.json");
+
+            string loaddata = File.ReadAllText(Application.dataPath + "/presets.json");
+            presets = JsonUtility.FromJson<List<Preset>>(loaddata);
+
+
+            foreach(Preset p in presets)
+            {
+                print(p._name);
+            }
+
+
+
+        }
+    }
+
 
 
 }

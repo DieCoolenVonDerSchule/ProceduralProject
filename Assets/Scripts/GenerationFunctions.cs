@@ -349,20 +349,27 @@ public class GenerationFunctions : MonoBehaviour
 
         //----------------------------------------------------------------------------------INPUT AUSLESEN
         float plantscale = float.Parse(GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text);
-        // float plantscale = 1.0f;
+        float seedscale = float.Parse(GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text);
+       
 
 
-        float plantProbability = 0.001f;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
-        
+        float plantProbability = plantscale;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
+       // float seedProbability = 0.2f;          // wahrscheinlichkeit für Verbreitung
+       // int seedRadius = 3;                    // Radius der Verbreitung der Pflanze  (Int)
 
+        float occurance = seedscale;
 
 
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
 
 
-            //    PFLANZEN PLATZIEREN
-            GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale);
+            //    Pflanzen platzieren: PUSTEBLUME
+            GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale, 0.0f, 1.0f, occurance);
+           
+            //    Pflanzen platzieren: BAUM
+        //    GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants2(heightmapCombined, plantscale, plantHeightMinDefault, plantHeightMaxDefault, seedRadius, seedProbability);
+
 
 
         }

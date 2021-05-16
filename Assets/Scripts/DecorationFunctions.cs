@@ -6,6 +6,9 @@ public class DecorationFunctions : MonoBehaviour
 {
 
     ArrayList plantList;
+    
+    
+
 
 
     // Start is called before the first frame update
@@ -25,7 +28,7 @@ public class DecorationFunctions : MonoBehaviour
     public GameObject toPlace;
 
 
-    public void placePlants (float[,] heightmap, float scale)
+    public void placePlants (float[,] heightmap, float scale, float plantHeightMin, float plantHeightMax, float occurance)
     {
 
         foreach (GameObject plant in plantList)
@@ -46,16 +49,27 @@ public class DecorationFunctions : MonoBehaviour
         float[,] probabilityDistribution = GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<GenerationFunctions>().createHeightMapPerlinNoiseCS(x, y, scale, startx, starty, 0, 0);
 
 
-
+        
 
         for (int i=0; i<x; i++)
         {
             for (int j=0; j<y; j++)
             {
               
-                if (Random.value < (1 - Mathf.Pow(heightmap[i, j],0.25f)) * probabilityDistribution[i, j]) putPlant(i, j, heightmap[i,j]);
+                if (heightmap[i,j] > plantHeightMin && heightmap[i,j] < plantHeightMax)
+                {
+
+                    if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j]);
+
+                 //   print("%: "+ (Mathf.Pow(heightmap[i, j], 0.25f) * Mathf.Pow(probabilityDistribution[i, j], 2) * occurance));
+                 //   print("%: "+ (Mathf.Pow(probabilityDistribution[i, j], 2))+ " -> " + heightmap[i,j]);
+
+  
+               
 
                 }
+
+            }
         }
 
     }
@@ -99,28 +113,16 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public void placePlants2(float[,] heightmap, float scale, float plantProbability, string typ)
+    public void placePlants2(float[,] heightmap, float plantProbability, float plantHeightMin, float plantHeightMax, int seedRadius, float seedProbability)
     {
 
-        float plantHeightMax = 0.5f;    // maximale höhe damit pflanze wachsen kann (0 bis 1)
-        float plantHeightMin = 0.0f;    // minimale höhe damit pflanze wachsen kann (0 bis 1)
-
-
-        if (typ=="Baum")
+        
+        foreach (GameObject plant in plantList)
         {
-            plantHeightMax = 0.4f;
-            plantHeightMin = 0.0f;
+            Destroy(plant);
+
         }
-
-
-        if (typ == "Blume")
-        {
-            plantHeightMax = 0.8f;
-            plantHeightMin = 0.0f;
-        }
-
-
-
+        
 
         int x = heightmap.GetLength(0);
         int y = heightmap.GetLength(1);
@@ -132,31 +134,32 @@ public class DecorationFunctions : MonoBehaviour
             for (int j = 0; j < y; j++)
             {
 
-
-                if (Random.value < plantProbability && heightmap[i,j]<plantHeightMax && heightmap[i,j]>plantHeightMin) seedPlants(i, j, heightmap); 
-                        
-                        
-
+                if (Random.value < plantProbability && heightmap[i,j]<plantHeightMax && heightmap[i,j]>plantHeightMin) seedPlants(i, j, heightmap, seedRadius, seedProbability); 
+                               
             }
         }
-
-
 
     }
 
 
-    public void seedPlants(int i, int j, float[,] heightmap)
+    public void seedPlants(int i, int j, float[,] heightmap, int seedRadius, float seedProbability)
     {
 
-        int seedRadius = 3;            // Radius der Verbreitung der Pflanze  (1 bis mapsize)
-        float seedProbability = 0.2f;    // Wahrscheinlichkeit der Verbreitung  (0 bis 1)
-
-
         putPlant(i, j, heightmap[i,j]);
-        if (Random.value < seedProbability) seedPlants(i-seedRadius, j, heightmap);
-        if (Random.value < seedProbability) seedPlants(i+seedRadius, j, heightmap);
-        if (Random.value < seedProbability) seedPlants(i, j-seedRadius, heightmap);
-        if (Random.value < seedProbability) seedPlants(i, j+seedRadius, heightmap);
+
+        if (i - seedRadius < 0) seedRadius = 0;
+        if (j - seedRadius < 0) seedRadius = 0;
+        if (i + seedRadius > heightmap.GetLength(0)-1) seedRadius = 0;
+        if (j + seedRadius > heightmap.GetLength(1)-1) seedRadius = 0;
+        
+        //if (i + seedRadius > 100) seedRadius = 0;
+        //if (j + seedRadius > 100) seedRadius = 0;
+
+
+        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i-seedRadius, j, heightmap, seedRadius-1, seedProbability);
+        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i+seedRadius, j, heightmap, seedRadius-1, seedProbability);
+        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i, j-seedRadius, heightmap, seedRadius-1, seedProbability);
+        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i, j+seedRadius, heightmap, seedRadius-1, seedProbability);
 
 
     }

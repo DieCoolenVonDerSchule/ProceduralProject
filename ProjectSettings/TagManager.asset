@@ -38,6 +38,11 @@ TagManager:
   - plantscale
   - plantscaleslider
   - presets
+  - seedradius
+  - seedradiusslider
+  - presetname
+  - occurance
+  - occuranceslider
   layers:
   - Default
   - TransparentFX
