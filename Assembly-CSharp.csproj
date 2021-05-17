@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
     <Compile Include="Assets\Scripts\UiFunctions.cs" />
     <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
+    <None Include="Assets\presets.txt" />
     <None Include="Assets\Scripts\noiseSimplex.cginc" />
     <None Include="Assets\Scripts\MeshGenerationComputeShader.compute" />
     <None Include="Assets\Scripts\PerlinNoiseCumputeShader.compute" />

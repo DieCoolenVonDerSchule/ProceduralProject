@@ -376,27 +376,115 @@ public class UiFunctions : MonoBehaviour
     public void writeFile()
     {
 
-        if (File.Exists(Application.dataPath + "/presets.json")) File.Delete("/presets.json");
+        if (File.Exists(Application.dataPath + "/presets.txt")) File.Delete("/presets.txt");
+        File.WriteAllText(Application.dataPath + "/presets.txt", "");
+
+
+        foreach (Preset p in presets)
+        {
+            string savestr = p._name + "*" + p._scale + "*" + p._coarse + "*" + p._contrib + "*" + p._output + "*" + p._plantscale + "*" + p._occurance + "*" + p._radius + "*" + p._shader + "*" + p._threading + "*" + p._plants;
+            // (name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants)
+
+
+            print(savestr);
+
+            File.AppendAllText(Application.dataPath + "/presets.txt", savestr);
+            File.AppendAllText(Application.dataPath + "/presets.txt", "#");
+          
 
 
 
+        }
+        
+        
+        /*
         string savedata = JsonUtility.ToJson(presets);
-       
-
-
         print(savedata);
-
         File.WriteAllText(Application.dataPath + "/presets.json" ,savedata);
-               
+        */       
 
     }
 
     public void readFile()
     {
 
+        if (File.Exists(Application.dataPath + "/presets.txt")) {
+
+
+            //string savestr = p._name + " " + p._scale + " " + p._coarse + " " + p._contrib + " " + p._output + " " + p._plantscale + " " + p._occurance + " " + p._radius + " " + p._shader + " " + p._threading + " " + p._plants;
+            // (name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants)
+
+
+            string loadstr = File.ReadAllText(Application.dataPath + "/presets.txt");
+
+            print(loadstr);
+
+            string[] loaddata = loadstr.Split(separator: '#');
+
+            foreach(String entry in loaddata)
+            {
+
+                string[] loadpreset = entry.Split(separator: '*');
+
+
+                print("------------------------------------");
+                print("loadpreset[0] : " + loadpreset[0]);      // name
+                print("loadpreset[1] : " + loadpreset[1]);      // scale
+                print("loadpreset[2] : " + loadpreset[2]);      // coarse
+                print("loadpreset[3] : " + loadpreset[3]);      // contrib
+                print("loadpreset[4] : " + loadpreset[4]);      // output
+                print("loadpreset[5] : " + loadpreset[5]);      // plantscale
+                print("loadpreset[6] : " + loadpreset[6]);      // occurance
+                print("loadpreset[7] : " + loadpreset[7]);      // radius
+                print("loadpreset[8] : " + loadpreset[8]);      // shader
+                print("loadpreset[9] : " + loadpreset[9]);      // threading
+                print("loadpreset[10] : " + loadpreset[10]);    // plants
+                print("------------------------------------");
+                
+
+
+                string name = loadpreset[0];
+                float scale = float.Parse(loadpreset[1]);
+                float coarse = float.Parse(loadpreset[2]);
+                float contrib = float.Parse(loadpreset[3]);
+                float output = float.Parse(loadpreset[4]);
+                float plantscale = float.Parse(loadpreset[5]);
+                float occurance = float.Parse(loadpreset[6]);
+                int radius = int.Parse(loadpreset[7]);
+
+                bool shader = false;
+                bool threading = false;
+                bool plants = false;
+
+                if (loadpreset[8] == "true") shader = true;
+                if (loadpreset[9] == "true") threading = true;
+                if (loadpreset[10] == "true") plants = true;
+
+
+                Preset p = new Preset(name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants);
+                presets.Add(p);
+
+
+
+
+                GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.Clear();
+
+                UnityEngine.UI.Dropdown.OptionData newoption = new UnityEngine.UI.Dropdown.OptionData(name);
+                GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.Add(newoption);
+
+
+            }
+
+
+
+
+        }
+
+
+        /*
         if (File.Exists(Application.dataPath + "/presets.json"))
         {
-            File.Delete("/presets.json");
+            
 
             string loaddata = File.ReadAllText(Application.dataPath + "/presets.json");
             presets = JsonUtility.FromJson<List<Preset>>(loaddata);
@@ -410,6 +498,8 @@ public class UiFunctions : MonoBehaviour
 
 
         }
+        */
+
     }
 
 
