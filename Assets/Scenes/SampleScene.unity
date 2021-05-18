@@ -208,9 +208,10 @@ GameObject:
   - component: {fileID: 11472688}
   - component: {fileID: 11472687}
   - component: {fileID: 11472690}
+  - component: {fileID: 11472691}
   m_Layer: 5
   m_Name: ButtonMoveUp
-  m_TagString: Untagged
+  m_TagString: moveupbutton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -278,7 +279,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11472690}
+      - m_Target: {fileID: 11472691}
         m_MethodName: moveUp
         m_Mode: 1
         m_Arguments:
@@ -339,6 +340,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 7200000, guid: bd939506f986bb146bce217be60934a5, type: 3}
+--- !u!114 &11472691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11472685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213232bb09ff47e4da91faab5cf3af6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &13931771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4967,6 +4980,7 @@ GameObject:
   - component: {fileID: 609486682}
   - component: {fileID: 609486681}
   - component: {fileID: 609486680}
+  - component: {fileID: 609486683}
   m_Layer: 5
   m_Name: InputFieldSpeed
   m_TagString: speed
@@ -5037,20 +5051,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 609486681}
   m_TextComponent: {fileID: 832303202}
   m_Placeholder: {fileID: 1463270785}
-  m_ContentType: 2
+  m_ContentType: 3
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 1
+  m_CharacterValidation: 2
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 609486683}
+        m_MethodName: changeSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -5095,6 +5120,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609486678}
   m_CullTransparentMesh: 0
+--- !u!114 &609486683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609486678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5318fad96a16aa418125067a3bf720e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 0}
 --- !u!1 &622295679
 GameObject:
   m_ObjectHideFlags: 0
@@ -10302,7 +10340,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 1,0
 --- !u!222 &1463270786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10324,9 +10362,10 @@ GameObject:
   - component: {fileID: 1473032493}
   - component: {fileID: 1473032492}
   - component: {fileID: 1473032491}
+  - component: {fileID: 1473032495}
   m_Layer: 5
   m_Name: ButtonMoveDown
-  m_TagString: Untagged
+  m_TagString: movedownbutton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10407,7 +10446,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473032491}
+      - m_Target: {fileID: 1473032495}
         m_MethodName: moveDown
         m_Mode: 1
         m_Arguments:
@@ -10455,6 +10494,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473032489}
   m_CullTransparentMesh: 0
+--- !u!114 &1473032495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473032489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213232bb09ff47e4da91faab5cf3af6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1482784619
 GameObject:
   m_ObjectHideFlags: 0
@@ -10998,9 +11049,10 @@ GameObject:
   - component: {fileID: 1587907667}
   - component: {fileID: 1587907666}
   - component: {fileID: 1587907665}
+  - component: {fileID: 1587907669}
   m_Layer: 5
   m_Name: ButtonMoveLeft
-  m_TagString: Untagged
+  m_TagString: moveleftbutton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11081,7 +11133,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1587907665}
+      - m_Target: {fileID: 1587907669}
         m_MethodName: moveLeft
         m_Mode: 1
         m_Arguments:
@@ -11129,6 +11181,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587907663}
   m_CullTransparentMesh: 0
+--- !u!114 &1587907669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587907663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213232bb09ff47e4da91faab5cf3af6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1604830160
 GameObject:
   m_ObjectHideFlags: 0
@@ -14769,9 +14833,10 @@ GameObject:
   - component: {fileID: 2048535109}
   - component: {fileID: 2048535108}
   - component: {fileID: 2048535107}
+  - component: {fileID: 2048535111}
   m_Layer: 5
   m_Name: ButtonMoveRight
-  m_TagString: Untagged
+  m_TagString: moverightbutton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14852,7 +14917,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2048535107}
+      - m_Target: {fileID: 2048535111}
         m_MethodName: moveRight
         m_Mode: 1
         m_Arguments:
@@ -14900,6 +14965,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048535105}
   m_CullTransparentMesh: 0
+--- !u!114 &2048535111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048535105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213232bb09ff47e4da91faab5cf3af6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061902307
 GameObject:
   m_ObjectHideFlags: 0

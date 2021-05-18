@@ -44,6 +44,10 @@ TagManager:
   - occurance
   - occuranceslider
   - filename
+  - moveupbutton
+  - movedownbutton
+  - moveleftbutton
+  - moverightbutton
   layers:
   - Default
   - TransparentFX

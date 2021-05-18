@@ -11,6 +11,8 @@ using Unity.Jobs;
 public class GenerationFunctions : MonoBehaviour
 {
 
+    public static float speed;
+
 
     public static Vector2[] startwerte;
     float timer = 0f;
@@ -50,7 +52,12 @@ public class GenerationFunctions : MonoBehaviour
         }
     }
 
-   
+
+
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -59,18 +66,10 @@ public class GenerationFunctions : MonoBehaviour
 
         if (GameObject.FindGameObjectWithTag("movetoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
+             
+                GameObject.FindGameObjectWithTag("moveupbutton").GetComponent<Movement>().moveUp(speed);
 
-            string speedInput = GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text;
-            int speed = int.Parse(speedInput);
-
-
-            timer += Time.deltaTime;
-
-            if (timer >= 1f / speed)
-            {
-                timer -= 1f / speed;
-                moveUp();
-            }
+            
 
         }
            
@@ -91,6 +90,9 @@ public class GenerationFunctions : MonoBehaviour
             }
 
         }
+
+        string speedInput = GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text;
+        speed = float.Parse(speedInput);
 
     }
 
@@ -472,6 +474,19 @@ public class GenerationFunctions : MonoBehaviour
 
         GeneratePerlinNoise();
     }
+
+
+
+
+    public void changeSpeed()
+    {
+        speed = float.Parse(GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text);
+
+
+    }
+
+
+
 
 
 

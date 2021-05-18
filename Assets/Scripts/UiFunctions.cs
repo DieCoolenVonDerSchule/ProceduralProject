@@ -92,7 +92,7 @@ public class UiFunctions : MonoBehaviour
         int shiftx = 0;
         int shifty = 0;
         int maps = 5;
-        int speed = 1;
+        float speed = 1.0f;
 
         float plantscale = 0.5f;
         float occurance = 0.2f;

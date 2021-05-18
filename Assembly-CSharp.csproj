@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\DecorationFunctions.cs" />
     <Compile Include="Assets\Scripts\GenerationFunctions.cs" />
     <Compile Include="Assets\Scripts\MeshGenerator.cs" />
+    <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\UiFunctions.cs" />
     <None Include="Assets\Saved Presets\presets.txt" />
     <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
