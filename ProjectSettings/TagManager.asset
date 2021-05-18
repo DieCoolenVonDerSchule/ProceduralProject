@@ -43,6 +43,7 @@ TagManager:
   - presetname
   - occurance
   - occuranceslider
+  - filename
   layers:
   - Default
   - TransparentFX

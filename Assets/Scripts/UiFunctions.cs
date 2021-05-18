@@ -126,6 +126,10 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("plantscaleslider").GetComponent<UnityEngine.UI.Slider>().value = plantscale;
         GameObject.FindGameObjectWithTag("occuranceslider").GetComponent<UnityEngine.UI.Slider>().value = occurance;
         GameObject.FindGameObjectWithTag("seedradiusslider").GetComponent<UnityEngine.UI.Slider>().value = seedradius;
+
+        GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = true;
+        GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = false;
+        GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = false;
     }
 
 
@@ -309,9 +313,11 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._plantscale;
         GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._occurance;
         GameObject.FindGameObjectWithTag("seedradius").GetComponent<UnityEngine.UI.InputField>().text = "" + presets[p]._radius;
-        
 
 
+        GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = presets[p]._shader;
+        GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = presets[p]._threading;
+        GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = presets[p]._plants;
 
 
 
@@ -376,8 +382,13 @@ public class UiFunctions : MonoBehaviour
     public void writeFile()
     {
 
-        if (File.Exists(Application.dataPath + "/presets.txt")) File.Delete("/presets.txt");
-        File.WriteAllText(Application.dataPath + "/presets.txt", "");
+        string filename = GameObject.FindGameObjectWithTag("filename").GetComponent<UnityEngine.UI.InputField>().text;
+
+        print(Application.dataPath + "/Saved Presets/" + filename);
+   
+
+        if (File.Exists(Application.dataPath + "/Saved Presets/" + filename+".txt")) File.Delete(Application.dataPath + "/Saved Presets/" + filename+".txt");
+        File.WriteAllText(Application.dataPath + "/Saved Presets/" + filename + ".txt", "");
 
 
         foreach (Preset p in presets)
@@ -388,43 +399,48 @@ public class UiFunctions : MonoBehaviour
 
             print(savestr);
 
-            File.AppendAllText(Application.dataPath + "/presets.txt", savestr);
-            File.AppendAllText(Application.dataPath + "/presets.txt", "#");
-          
-
-
+            File.AppendAllText(Application.dataPath + "/Saved Presets/" + filename + ".txt", savestr);
+            File.AppendAllText(Application.dataPath + "/Saved Presets/" + filename + ".txt", "#");
 
         }
-        
-        
+
+        File.AppendAllText(Application.dataPath + "/Saved Presets/" + filename + ".txt", "|");
+
+
+
         /*
         string savedata = JsonUtility.ToJson(presets);
         print(savedata);
         File.WriteAllText(Application.dataPath + "/presets.json" ,savedata);
-        */       
+        */
 
     }
 
     public void readFile()
     {
 
-        if (File.Exists(Application.dataPath + "/presets.txt")) {
+        setDefault();
+
+        string filename = GameObject.FindGameObjectWithTag("filename").GetComponent<UnityEngine.UI.InputField>().text;
+
+        
+        string loadstr = File.ReadAllText(Application.dataPath + "/Saved Presets/" + filename + ".txt");
+
+        print(loadstr);
 
 
-            //string savestr = p._name + " " + p._scale + " " + p._coarse + " " + p._contrib + " " + p._output + " " + p._plantscale + " " + p._occurance + " " + p._radius + " " + p._shader + " " + p._threading + " " + p._plants;
-            // (name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants)
+        string[] loaddata = loadstr.Split(separator: '#');
 
 
-            string loadstr = File.ReadAllText(Application.dataPath + "/presets.txt");
 
-            print(loadstr);
-
-            string[] loaddata = loadstr.Split(separator: '#');
-
-            foreach(String entry in loaddata)
+        for (int i = 0; i < loaddata.Length-1; i++)
             {
+                print("------------------------------------");
+                print(loaddata[i]);
+                print("------------------------------------");
 
-                string[] loadpreset = entry.Split(separator: '*');
+
+                string[] loadpreset = loaddata[i].Split(separator: '*');
 
 
                 print("------------------------------------");
@@ -440,7 +456,6 @@ public class UiFunctions : MonoBehaviour
                 print("loadpreset[9] : " + loadpreset[9]);      // threading
                 print("loadpreset[10] : " + loadpreset[10]);    // plants
                 print("------------------------------------");
-                
 
 
                 string name = loadpreset[0];
@@ -452,22 +467,27 @@ public class UiFunctions : MonoBehaviour
                 float occurance = float.Parse(loadpreset[6]);
                 int radius = int.Parse(loadpreset[7]);
 
+
                 bool shader = false;
                 bool threading = false;
                 bool plants = false;
 
-                if (loadpreset[8] == "true") shader = true;
-                if (loadpreset[9] == "true") threading = true;
-                if (loadpreset[10] == "true") plants = true;
+
+                if (loadpreset[8] == "True") shader = true;
+                if (loadpreset[9] == "True") threading = true;
+                if (loadpreset[10] == "True") plants = true;
 
 
-                Preset p = new Preset(name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants);
+            print("--------BOOL VARAIBLES-------");
+            print("shader: "+shader);
+            print("thread: "+shader);
+            print("plants: "+shader);
+            print("-----------------------------");
+
+
+            Preset p = new Preset(name, scale, coarse, contrib, output, plantscale, occurance, radius, shader, threading, plants);
                 presets.Add(p);
 
-
-
-
-                GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.Clear();
 
                 UnityEngine.UI.Dropdown.OptionData newoption = new UnityEngine.UI.Dropdown.OptionData(name);
                 GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().options.Add(newoption);
@@ -475,33 +495,9 @@ public class UiFunctions : MonoBehaviour
 
             }
 
-
-
-
-        }
-
-
-        /*
-        if (File.Exists(Application.dataPath + "/presets.json"))
-        {
             
-
-            string loaddata = File.ReadAllText(Application.dataPath + "/presets.json");
-            presets = JsonUtility.FromJson<List<Preset>>(loaddata);
-
-
-            foreach(Preset p in presets)
-            {
-                print(p._name);
-            }
-
-
-
         }
-        */
-
-    }
 
 
-
+      
 }
