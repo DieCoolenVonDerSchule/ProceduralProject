@@ -60,6 +60,8 @@ public class UiFunctions : MonoBehaviour
     {
         if (presets == null) initialize();
 
+        
+        
     }
 
     public static void initialize()
@@ -67,7 +69,7 @@ public class UiFunctions : MonoBehaviour
 
         presets = new List<Preset>();
         GameObject.FindGameObjectWithTag("presets").GetComponent<UnityEngine.UI.Dropdown>().ClearOptions();
-
+        
 
     }
 
@@ -92,11 +94,13 @@ public class UiFunctions : MonoBehaviour
         int shiftx = 0;
         int shifty = 0;
         int maps = 5;
-        float speed = 1.0f;
+        float speed = 5.0f;
 
         float plantscale = 0.5f;
         float occurance = 0.2f;
         int seedradius = 10;
+
+        string filename = "presets";
 
 
         GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text = "" + sizex;
@@ -130,6 +134,9 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = true;
         GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = false;
         GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = false;
+
+        GameObject.FindGameObjectWithTag("filename").GetComponent<UnityEngine.UI.InputField>().text = filename;
+
     }
 
 

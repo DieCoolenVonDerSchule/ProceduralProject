@@ -18,6 +18,11 @@ public class GenerationFunctions : MonoBehaviour
     float timer = 0f;
     public ComputeShader shader;
 
+
+    public MeshGenerator meshgen;
+
+ 
+
     public struct PerlinInfo
     {
         public int x;
@@ -94,6 +99,7 @@ public class GenerationFunctions : MonoBehaviour
         string speedInput = GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text;
         speed = float.Parse(speedInput);
 
+      
     }
 
 
@@ -246,7 +252,13 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-    public void GeneratePerlinNoise()
+    public void GenerateStart()
+    {
+        GeneratePerlinNoise(meshgen);
+        Movement.initializeConstants();
+    }
+
+    public void GeneratePerlinNoise(MeshGenerator meshgen)
     {
 
         string xinput = GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text;
@@ -280,7 +292,7 @@ public class GenerationFunctions : MonoBehaviour
 
 
         initializeConstants(mapcount);
-
+        
 
         float[][,] heightmaps = new float[mapcount][,];
 
@@ -343,7 +355,7 @@ public class GenerationFunctions : MonoBehaviour
         }
 
 
-        GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>().generateMesh(heightmapCombined);
+        meshgen.generateMesh(heightmapCombined);
 
 
 
@@ -424,7 +436,7 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-
+    /*
     public void moveUp()
     {
         string step = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
@@ -434,7 +446,7 @@ public class GenerationFunctions : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
 
-        GeneratePerlinNoise();
+        GeneratePerlinNoise(meshgen);
     }
 
 
@@ -475,7 +487,7 @@ public class GenerationFunctions : MonoBehaviour
         GeneratePerlinNoise();
     }
 
-
+    */
 
 
     public void changeSpeed()
@@ -498,7 +510,7 @@ public class GenerationFunctions : MonoBehaviour
             startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
         }
 
-        GeneratePerlinNoise();
+        GeneratePerlinNoise(meshgen);
     }
 
 
