@@ -355,8 +355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
   meshgen: {fileID: 1628679738}
-  threshold: 0
-  sizey: 0
   generations: {fileID: 0}
 --- !u!1 &13931771
 GameObject:
@@ -10519,8 +10517,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
   meshgen: {fileID: 1628679738}
-  threshold: 0
-  sizey: 0
   generations: {fileID: 0}
 --- !u!1 &1482784619
 GameObject:
@@ -11212,8 +11208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
   meshgen: {fileID: 1628679738}
-  threshold: 0
-  sizey: 0
   generations: {fileID: 0}
 --- !u!1 &1604830160
 GameObject:
@@ -15002,8 +14996,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
   meshgen: {fileID: 1628679738}
-  threshold: 0
-  sizey: 0
   generations: {fileID: 0}
 --- !u!1 &2061902307
 GameObject:

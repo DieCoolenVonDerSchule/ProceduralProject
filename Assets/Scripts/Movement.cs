@@ -10,14 +10,21 @@ public class Movement : MonoBehaviour
     public static Vector3 meshposition;
 
     public static float threshold;
+    public static int sectionCount;
    
 
     //public float sizex;
     public static int sizey;
+    public static float scale;
+    public static float coarse;
+    public static float contrib;
   
     public GenerationFunctions generations;
 
     public static Vector3 genPos;
+
+    public static List<MeshGenerator> meshGenerators;
+
 
     // Start is called before the first frame update
     void Start()
@@ -52,11 +59,18 @@ public class Movement : MonoBehaviour
 
       //  sizex = int.Parse(GameObject.FindGameObjectWithTag("sizex").GetComponent<UnityEngine.UI.InputField>().text);
         sizey = int.Parse(GameObject.FindGameObjectWithTag("sizey").GetComponent<UnityEngine.UI.InputField>().text);
-        
+        scale = float.Parse(GameObject.FindGameObjectWithTag("scale").GetComponent<UnityEngine.UI.InputField>().text);
+        coarse = float.Parse(GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text);
+        contrib = float.Parse(GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text);
+
         float offset = meshposition.z;
         threshold = offset + sizey / 2;
 
+        sectionCount = 1;
+
         genPos = meshposition;
+
+        meshGenerators = new List<MeshGenerator>();
     }
 
 
@@ -75,25 +89,60 @@ public class Movement : MonoBehaviour
         if (pos.z > threshold)
         {
 
+            for (int i = 0; i < GenerationFunctions.startwerte.Length; i++)
+            {
+
+                GenerationFunctions.startwerte[i].y += (sizey - 1)*scale * Mathf.Pow(i + 1, coarse);
+
+            }
+
             MeshGenerator newMeshGenerator = Instantiate(meshgen);
-            
+
+
+
+            float localScale = meshgen.transform.localScale.z;
+
+
 
             Vector3 newPosition = genPos;
             
          
-            newPosition.z += sizey;
+            newPosition.z += (sizey - 2) * localScale;
+
            // print(sizey);
 
 
             newMeshGenerator.transform.position = newPosition;
-                      
+
             
             generations.GeneratePerlinNoise(newMeshGenerator);
 
 
+            meshGenerators.Add(newMeshGenerator);
+            threshold += (sizey - 2) * localScale;
+            genPos.z += (sizey - 2) * localScale;
+
+            sectionCount++;
+
+            //
            
-            threshold += sizey;
-            genPos.z += sizey;
+
+            if (sectionCount == 4)
+            {
+
+                //print("count: "+sectionCount);
+                print(meshGenerators.Count);
+
+
+              
+                Destroy(meshGenerators[0].gameObject);
+                meshGenerators.RemoveAt(0);
+                sectionCount--;
+
+            }
+            
+          
+            
 
             
             

@@ -53,7 +53,7 @@ public class GenerationFunctions : MonoBehaviour
         public void Execute(int index)
         {
             var data = perlinInfoArray[index];
-            perlinOutput[index] = Mathf.PerlinNoise(data.startx + (data.shiftx) * data.scale, data.starty + (data.shifty) * data.scale);
+            perlinOutput[index] = Mathf.PerlinNoise(data.startx + data.shiftx * data.scale, data.starty + data.shifty * data.scale);
         }
     }
 
