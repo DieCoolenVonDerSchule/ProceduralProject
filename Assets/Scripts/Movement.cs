@@ -25,6 +25,9 @@ public class Movement : MonoBehaviour
 
     public static List<MeshGenerator> meshGenerators;
 
+    public static float speed;
+   
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +50,16 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (GameObject.FindGameObjectWithTag("movetoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+
+            moveUp(speed);
+
+
+
+        }
+
     }
 
 
@@ -63,6 +75,9 @@ public class Movement : MonoBehaviour
         coarse = float.Parse(GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text);
         contrib = float.Parse(GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text);
 
+        speed = float.Parse(GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text);
+
+
         float offset = meshposition.z;
         threshold = offset + sizey / 2;
 
@@ -71,16 +86,22 @@ public class Movement : MonoBehaviour
         genPos = meshposition;
 
         meshGenerators = new List<MeshGenerator>();
+
+       
     }
 
+
+    public static void changeSpeed()
+    {
+        speed = float.Parse(GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text);
+
+
+    }
 
     public void moveUp(float speed)
     {
 
-        
        
-
-
         Vector3 pos = camera.transform.position;
         
         pos.z += speed*Time.deltaTime;

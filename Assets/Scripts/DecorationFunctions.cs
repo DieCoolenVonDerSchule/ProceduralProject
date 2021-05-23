@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+[RequireComponent(typeof(MeshGenerator))]
+
 public class DecorationFunctions : MonoBehaviour
 {
 
-    ArrayList plantList;
-    
+    public List<GameObject> plantList;
+
     
 
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
-        plantList = new ArrayList();
+        plantList = new List<GameObject>();
+        print("PLANT START");
         
     }
 
@@ -31,11 +37,13 @@ public class DecorationFunctions : MonoBehaviour
     public void placePlants (float[,] heightmap, float scale, float plantHeightMin, float plantHeightMax, float occurance)
     {
 
+        /*
         foreach (GameObject plant in plantList)
         {
             Destroy(plant);
 
         }
+        */
 
         int x = heightmap.GetLength(0);
         int y = heightmap.GetLength(1);
@@ -59,13 +67,9 @@ public class DecorationFunctions : MonoBehaviour
                 if (heightmap[i,j] > plantHeightMin && heightmap[i,j] < plantHeightMax)
                 {
 
-                    if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j]);
+                    if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j], GetComponent<MeshGenerator>());
 
-                 //   print("%: "+ (Mathf.Pow(heightmap[i, j], 0.25f) * Mathf.Pow(probabilityDistribution[i, j], 2) * occurance));
-                 //   print("%: "+ (Mathf.Pow(probabilityDistribution[i, j], 2))+ " -> " + heightmap[i,j]);
-
-  
-               
+                          
 
                 }
 
@@ -75,7 +79,7 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public void putPlant(int x, int y, float height)
+    public void putPlant(int x, int y, float height, MeshGenerator meshgen)
     {
 
 
@@ -83,29 +87,24 @@ public class DecorationFunctions : MonoBehaviour
         float output = float.Parse(outputStr);
 
 
-        float offsetX = GameObject.FindGameObjectWithTag("MeshGenerator").transform.position.x;
-        float offsetHeight = GameObject.FindGameObjectWithTag("MeshGenerator").transform.position.y;
-        float offsetY = GameObject.FindGameObjectWithTag("MeshGenerator").transform.position.z;
+        float offsetX = meshgen.transform.position.x;
+        float offsetHeight = meshgen.transform.position.y;
+        float offsetY = meshgen.transform.position.z;
 
-        float scaleX = GameObject.FindGameObjectWithTag("MeshGenerator").transform.localScale.x;
-        float scaleHeight = GameObject.FindGameObjectWithTag("MeshGenerator").transform.localScale.y;
-        float scaleY = GameObject.FindGameObjectWithTag("MeshGenerator").transform.localScale.z;
+        float scaleX = meshgen.transform.localScale.x;
+        float scaleHeight = meshgen.transform.localScale.y;
+        float scaleY = meshgen.transform.localScale.z;
 
-
-
-        //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-        //sphere.transform.position = new Vector3(x*scaleX+offsetX, height*scaleHeight*output+offsetHeight, y*scaleY+offsetY);
 
 
         toPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
 
-        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.identity));
+        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f))); 
 
 
 
-        
+
 
 
 
@@ -145,7 +144,7 @@ public class DecorationFunctions : MonoBehaviour
     public void seedPlants(int i, int j, float[,] heightmap, int seedRadius, float seedProbability)
     {
 
-        putPlant(i, j, heightmap[i,j]);
+        putPlant(i, j, heightmap[i,j], GetComponent<MeshGenerator>());
 
         if (i - seedRadius < 0) seedRadius = 0;
         if (j - seedRadius < 0) seedRadius = 0;

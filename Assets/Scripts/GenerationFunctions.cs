@@ -11,11 +11,11 @@ using Unity.Jobs;
 public class GenerationFunctions : MonoBehaviour
 {
 
-    public static float speed;
+    
 
 
     public static Vector2[] startwerte;
-    float timer = 0f;
+    
     public ComputeShader shader;
 
 
@@ -69,14 +69,7 @@ public class GenerationFunctions : MonoBehaviour
     {
 
 
-        if (GameObject.FindGameObjectWithTag("movetoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
-        {
-             
-                GameObject.FindGameObjectWithTag("moveupbutton").GetComponent<Movement>().moveUp(speed);
-
-            
-
-        }
+       
            
         
     }
@@ -96,8 +89,7 @@ public class GenerationFunctions : MonoBehaviour
 
         }
 
-        string speedInput = GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text;
-        speed = float.Parse(speedInput);
+        
 
       
     }
@@ -378,11 +370,16 @@ public class GenerationFunctions : MonoBehaviour
         {
 
 
-            //    Pflanzen platzieren: PUSTEBLUME
-            GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale, 0.0f, 1.0f, occurance);
-           
+            //    Pflanzen platzieren: SONNENBLUME
+            
+            meshgen.GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale, 0.0f, 0.4f, occurance);
+            print("ES IST PASSIERT");
+
+
+
+
             //    Pflanzen platzieren: BAUM
-        //    GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants2(heightmapCombined, plantscale, plantHeightMinDefault, plantHeightMaxDefault, seedRadius, seedProbability);
+            //    GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants2(heightmapCombined, plantscale, plantHeightMinDefault, plantHeightMaxDefault, seedRadius, seedProbability);
 
 
 
@@ -490,12 +487,7 @@ public class GenerationFunctions : MonoBehaviour
     */
 
 
-    public void changeSpeed()
-    {
-        speed = float.Parse(GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text);
-
-
-    }
+    
 
 
 
