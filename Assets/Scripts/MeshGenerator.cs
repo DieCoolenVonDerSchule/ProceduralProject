@@ -150,4 +150,16 @@ public class MeshGenerator : MonoBehaviour
 
 
     }
+
+
+    public void destroyAllPlants()
+    {
+        print("DECO COUNT:" + GetComponents<DecorationFunctions>().Length);
+        foreach(DecorationFunctions deco in GetComponents<DecorationFunctions>())
+        {
+
+            deco.destroyPlants();
+            
+        }
+    }
 }

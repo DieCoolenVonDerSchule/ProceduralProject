@@ -117,8 +117,18 @@ public class Movement : MonoBehaviour
 
             }
 
+            
+
             MeshGenerator newMeshGenerator = Instantiate(meshgen);
 
+
+
+
+            //newMeshGenerator.GetComponents<DecorationFunctions>().;
+
+           
+
+            
 
 
             float localScale = meshgen.transform.localScale.z;
@@ -132,8 +142,10 @@ public class Movement : MonoBehaviour
 
            // print(sizey);
 
-
+            
             newMeshGenerator.transform.position = newPosition;
+
+            
 
             
             generations.GeneratePerlinNoise(newMeshGenerator);
@@ -148,6 +160,9 @@ public class Movement : MonoBehaviour
             //
            
 
+
+
+
             if (sectionCount == 4)
             {
 
@@ -155,9 +170,15 @@ public class Movement : MonoBehaviour
                 print(meshGenerators.Count);
 
 
-              
+
+
+                
+                meshGenerators[0].destroyAllPlants();
+
                 Destroy(meshGenerators[0].gameObject);
                 meshGenerators.RemoveAt(0);
+
+
                 sectionCount--;
 
             }

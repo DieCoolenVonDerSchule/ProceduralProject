@@ -372,10 +372,15 @@ public class GenerationFunctions : MonoBehaviour
 
             //    Pflanzen platzieren: SONNENBLUME
             
-            meshgen.GetComponent<DecorationFunctions>().placePlants(heightmapCombined, plantscale, 0.0f, 0.4f, occurance);
-            print("ES IST PASSIERT");
+            //meshgen.GetComponent<DecorationFunctions>().placePlants(heightmapCombined);
+            
 
 
+            foreach(DecorationFunctions decfun in meshgen.GetComponents<DecorationFunctions>())
+            {
+                decfun.placePlants(heightmapCombined);
+               // print("ES IST PASSIERT");
+            }
 
 
             //    Pflanzen platzieren: BAUM

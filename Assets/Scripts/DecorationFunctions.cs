@@ -9,11 +9,18 @@ using UnityEngine;
 public class DecorationFunctions : MonoBehaviour
 {
 
+    public GameObject toPlace;
     public List<GameObject> plantList;
 
-    
+    public float scale;
+    public float plantHeightMin;
+    public float plantHeightMax;
+    public float occurance;
+    public float plantSize;
 
-    
+
+
+
 
 
     // Start is called before the first frame update
@@ -31,10 +38,10 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public GameObject toPlace;
+   
 
 
-    public void placePlants (float[,] heightmap, float scale, float plantHeightMin, float plantHeightMax, float occurance)
+    public void placePlants (float[,] heightmap)
     {
 
         /*
@@ -79,7 +86,7 @@ public class DecorationFunctions : MonoBehaviour
     }
 
 
-    public void putPlant(int x, int y, float height, MeshGenerator meshgen)
+    void putPlant(int x, int y, float height, MeshGenerator meshgen)
     {
 
 
@@ -97,18 +104,32 @@ public class DecorationFunctions : MonoBehaviour
 
 
 
-        toPlace.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        toPlace.transform.localScale = new Vector3(0.5f*plantSize, 0.5f*plantSize, 0.5f);
 
 
-        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f))); 
-
-
-
-
+        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f)));
+       // print("ADDED TO PLANTLIST: "+plantList.Count);
 
 
 
 
+
+
+
+
+    }
+
+
+
+    public void destroyPlants()
+    {
+        print("PLANTLIST: "+plantList.Count);
+        foreach (GameObject plant in plantList)
+        {
+            Destroy(plant);
+
+            print("PLANT DESTROY");
+        }
     }
 
 
