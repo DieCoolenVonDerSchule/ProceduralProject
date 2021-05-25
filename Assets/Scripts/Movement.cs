@@ -121,6 +121,13 @@ public class Movement : MonoBehaviour
 
             MeshGenerator newMeshGenerator = Instantiate(meshgen);
 
+            print("MESH GENERATOR INSTANCIATED");
+
+
+
+
+
+         
 
 
 
@@ -146,9 +153,19 @@ public class Movement : MonoBehaviour
             newMeshGenerator.transform.position = newPosition;
 
             
+            foreach(DecorationFunctions deco in newMeshGenerator.GetComponents<DecorationFunctions>())
+            {
 
+                deco.inistializePlants();               
+
+
+            }
             
+
+        
             generations.GeneratePerlinNoise(newMeshGenerator);
+            print("PERLINNOISE GENERATED");
+
 
 
             meshGenerators.Add(newMeshGenerator);
@@ -172,7 +189,8 @@ public class Movement : MonoBehaviour
 
 
 
-                
+
+                print("CALL DESTROY ALL PLANTS");
                 meshGenerators[0].destroyAllPlants();
 
                 Destroy(meshGenerators[0].gameObject);
@@ -233,6 +251,8 @@ public class Movement : MonoBehaviour
     }
 
 
+
+    
 
 
 

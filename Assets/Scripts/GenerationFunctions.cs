@@ -12,16 +12,13 @@ public class GenerationFunctions : MonoBehaviour
 {
 
     
-
-
     public static Vector2[] startwerte;
-    
-    public ComputeShader shader;
 
+    public ComputeShader shader;
 
     public MeshGenerator meshgen;
 
- 
+
 
     public struct PerlinInfo
     {
@@ -59,20 +56,6 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-       
-           
-        
-    }
 
 
     public static void initializeConstants(int mapcount)
@@ -86,11 +69,7 @@ public class GenerationFunctions : MonoBehaviour
                 startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
                 
             }
-
         }
-
-        
-
       
     }
 
@@ -110,6 +89,7 @@ public class GenerationFunctions : MonoBehaviour
 
         return heightmap;
     }
+
 
 
     public float[,] createHeightMapPerlinNoiseCS(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
@@ -147,7 +127,6 @@ public class GenerationFunctions : MonoBehaviour
         float[,] heightmap = new float[x, y];
 
 
-
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -176,9 +155,9 @@ public class GenerationFunctions : MonoBehaviour
             }
         }
 
-
         return heightmap;
     }
+
 
 
     public static float[,] createHeightMapPerlinNoiseJobs(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
@@ -221,6 +200,7 @@ public class GenerationFunctions : MonoBehaviour
 
         return heightmap;
     }
+
 
 
     public void GenerateRandom()
@@ -274,17 +254,12 @@ public class GenerationFunctions : MonoBehaviour
         {
             print("scaleInput: " + scaleInput);
             print("scale     : " + scale);
-
-
         }
-
 
         string mapsinput = GameObject.FindGameObjectWithTag("maps").GetComponent<UnityEngine.UI.InputField>().text;
         int mapcount = int.Parse(mapsinput);
 
 
-        initializeConstants(mapcount);
-        
 
         float[][,] heightmaps = new float[mapcount][,];
 
@@ -293,6 +268,13 @@ public class GenerationFunctions : MonoBehaviour
 
         bool shaderIsOn = (GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
         bool threadingIsOn = (GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
+
+
+
+
+        initializeConstants(mapcount);
+       
+         
 
 
 
@@ -347,23 +329,10 @@ public class GenerationFunctions : MonoBehaviour
         }
 
 
+
         meshgen.generateMesh(heightmapCombined);
 
 
-
-
-
-        //----------------------------------------------------------------------------------INPUT AUSLESEN
-        float plantscale = float.Parse(GameObject.FindGameObjectWithTag("plantscale").GetComponent<UnityEngine.UI.InputField>().text);
-        float seedscale = float.Parse(GameObject.FindGameObjectWithTag("occurance").GetComponent<UnityEngine.UI.InputField>().text);
-       
-
-
-        float plantProbability = plantscale;   // wahrscheinlichkeit dass eine pflanze entsteht(0 bis 1)
-       // float seedProbability = 0.2f;          // wahrscheinlichkeit für Verbreitung
-       // int seedRadius = 3;                    // Radius der Verbreitung der Pflanze  (Int)
-
-        float occurance = seedscale;
 
 
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
@@ -436,63 +405,6 @@ public class GenerationFunctions : MonoBehaviour
 
     }
 
-
-
-    /*
-    public void moveUp()
-    {
-        string step = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
-
-        int shiftstep = int.Parse(step);
-        shiftstep++;
-
-        GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
-
-        GeneratePerlinNoise(meshgen);
-    }
-
-
-    public void moveDown()
-    {
-        string step = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
-
-        int shiftstep = int.Parse(step);
-        shiftstep--;
-
-        GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
-
-        GeneratePerlinNoise();
-    }
-
-
-    public void moveLeft()
-    {
-        string step = GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text;
-
-        int shiftstep = int.Parse(step);
-        shiftstep--;
-
-        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
-
-        GeneratePerlinNoise();
-    }
-
-    public void moveRight()
-    {
-        string step = GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text;
-
-        int shiftstep = int.Parse(step);
-        shiftstep++;
-
-        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftstep;
-
-        GeneratePerlinNoise();
-    }
-
-    */
-
-
-    
 
 
 

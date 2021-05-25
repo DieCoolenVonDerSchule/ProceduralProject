@@ -48,6 +48,7 @@ TagManager:
   - movedownbutton
   - moveleftbutton
   - moverightbutton
+  - clearplants
   layers:
   - Default
   - TransparentFX

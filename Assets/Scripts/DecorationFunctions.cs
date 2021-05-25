@@ -4,13 +4,16 @@ using UnityEngine;
 
 
 
-[RequireComponent(typeof(MeshGenerator))]
+
+//[RequireComponent(typeof(MeshGenerator))]
 
 public class DecorationFunctions : MonoBehaviour
 {
 
     public GameObject toPlace;
-    public List<GameObject> plantList;
+
+   
+    public ArrayList plantList;
 
     public float scale;
     public float plantHeightMin;
@@ -26,19 +29,46 @@ public class DecorationFunctions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        plantList = new List<GameObject>();
-        print("PLANT START");
         
+       
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void inistializePlants()
     {
         
+        
+        print("PLANT START");
+
+
+        try
+        {
+            print("PLANTLIST COUNT (INIT) VORHER: " + this.plantList.Count);
+
+
+        }
+
+        catch(System.Exception e)
+        {
+            print("LISTE WAR NULL");
+        }
+      
+        if (this.plantList == null) this.plantList = new ArrayList();
+        print("PLANTLIST COUNT (INIT) NACHHER: " + this.plantList.Count);
+
+
+
+
+
     }
 
 
-   
+
+
+
+
 
 
     public void placePlants (float[,] heightmap)
@@ -76,6 +106,8 @@ public class DecorationFunctions : MonoBehaviour
 
                     if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j], GetComponent<MeshGenerator>());
 
+                  //  if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j], this.transform.GetComponent<MeshGenerator>());
+
                           
 
                 }
@@ -83,12 +115,14 @@ public class DecorationFunctions : MonoBehaviour
             }
         }
 
+        print("ADDED TO PLANTLIST (PLACE): " + plantList.Count);
     }
 
 
     void putPlant(int x, int y, float height, MeshGenerator meshgen)
     {
 
+        
 
         string outputStr = GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text;
         float output = float.Parse(outputStr);
@@ -107,11 +141,15 @@ public class DecorationFunctions : MonoBehaviour
         toPlace.transform.localScale = new Vector3(0.5f*plantSize, 0.5f*plantSize, 0.5f);
 
 
-        plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f)));
-       // print("ADDED TO PLANTLIST: "+plantList.Count);
+        
+        this.plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f)));
+
+        //print("PLANT LIST (PUT): "+this.plantList.Count);
+
+        
 
 
-
+    
 
 
 
@@ -123,64 +161,25 @@ public class DecorationFunctions : MonoBehaviour
 
     public void destroyPlants()
     {
-        print("PLANTLIST: "+plantList.Count);
-        foreach (GameObject plant in plantList)
+
+        print("PLANT DESTROY");
+        print("PLANTLIST SIZE VORHER: " + this.plantList.Count);
+
+        foreach (GameObject plant in this.plantList)
         {
+            
             Destroy(plant);
-
-            print("PLANT DESTROY");
-        }
-    }
-
-
-    public void placePlants2(float[,] heightmap, float plantProbability, float plantHeightMin, float plantHeightMax, int seedRadius, float seedProbability)
-    {
-
-        
-        foreach (GameObject plant in plantList)
-        {
-            Destroy(plant);
+            print("PLANT TO DESTROY: "+plant);
 
         }
+
+        plantList.Clear();
         
 
-        int x = heightmap.GetLength(0);
-        int y = heightmap.GetLength(1);
-
-
-
-        for (int i = 0; i < x; i++)
-        {
-            for (int j = 0; j < y; j++)
-            {
-
-                if (Random.value < plantProbability && heightmap[i,j]<plantHeightMax && heightmap[i,j]>plantHeightMin) seedPlants(i, j, heightmap, seedRadius, seedProbability); 
-                               
-            }
-        }
+        print("PLANTLIST SIZE NACHHER: " + plantList.Count);
 
     }
 
 
-    public void seedPlants(int i, int j, float[,] heightmap, int seedRadius, float seedProbability)
-    {
 
-        putPlant(i, j, heightmap[i,j], GetComponent<MeshGenerator>());
-
-        if (i - seedRadius < 0) seedRadius = 0;
-        if (j - seedRadius < 0) seedRadius = 0;
-        if (i + seedRadius > heightmap.GetLength(0)-1) seedRadius = 0;
-        if (j + seedRadius > heightmap.GetLength(1)-1) seedRadius = 0;
-        
-        //if (i + seedRadius > 100) seedRadius = 0;
-        //if (j + seedRadius > 100) seedRadius = 0;
-
-
-        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i-seedRadius, j, heightmap, seedRadius-1, seedProbability);
-        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i+seedRadius, j, heightmap, seedRadius-1, seedProbability);
-        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i, j-seedRadius, heightmap, seedRadius-1, seedProbability);
-        if (Random.value < seedProbability && seedRadius > 1) seedPlants(i, j+seedRadius, heightmap, seedRadius-1, seedProbability);
-
-
-    }
 }

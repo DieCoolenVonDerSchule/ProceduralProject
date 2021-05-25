@@ -30,6 +30,17 @@ public class MeshGenerator : MonoBehaviour
     void Start()
     {
         
+            foreach (DecorationFunctions deco in GetComponents<DecorationFunctions>())
+            {
+
+                deco.inistializePlants();
+
+            }
+
+
+        
+
+
     }
 
     public void generateMesh(float[,] map)
