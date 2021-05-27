@@ -10348,6 +10348,7 @@ GameObject:
   - component: {fileID: 1628679738}
   - component: {fileID: 1628679741}
   - component: {fileID: 1628679742}
+  - component: {fileID: 1628679743}
   m_Layer: 5
   m_Name: Mesh Generator
   m_TagString: MeshGenerator
@@ -10499,6 +10500,24 @@ MonoBehaviour:
   plantHeightMax: 1
   occurance: 0.5
   plantSize: 0.5
+--- !u!114 &1628679743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628679736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d39ebbc605ba1046ad3f873a0bbf4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toPlace: {fileID: -927199367670048503, guid: afc36d00543c49a4c9a084344e6555cd, type: 3}
+  scale: 0.002
+  plantHeightMin: 0
+  plantHeightMax: 1
+  occurance: 0.6
+  plantSize: 1
 --- !u!1 &1641287534
 GameObject:
   m_ObjectHideFlags: 0
