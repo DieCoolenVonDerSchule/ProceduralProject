@@ -89,8 +89,6 @@ public class UiFunctions : MonoBehaviour
         float contrib = 6.5f;
         float output = 6.0f;
 
-        int shiftx = 0;
-        int shifty = 0;
         int maps = 5;
         float speed = 5.0f;
 
@@ -106,8 +104,7 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("coarse").GetComponent<UnityEngine.UI.InputField>().text = "" + coarse;  
         GameObject.FindGameObjectWithTag("contrib").GetComponent<UnityEngine.UI.InputField>().text = "" + contrib;
         GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text = "" + output;
-        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text = "" + shiftx;
-        GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text = "" + shifty;
+
 
         GameObject.FindGameObjectWithTag("maps").GetComponent<UnityEngine.UI.InputField>().text = "" + maps;
         GameObject.FindGameObjectWithTag("speed").GetComponent<UnityEngine.UI.InputField>().text = "" + speed;
@@ -116,9 +113,7 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("coarseslider").GetComponent<UnityEngine.UI.Slider>().value = coarse;
         GameObject.FindGameObjectWithTag("contribslider").GetComponent<UnityEngine.UI.Slider>().value = contrib;
         GameObject.FindGameObjectWithTag("outputslider").GetComponent<UnityEngine.UI.Slider>().value = output;
-        GameObject.FindGameObjectWithTag("shiftxslider").GetComponent<UnityEngine.UI.Slider>().value = shiftx;
-        GameObject.FindGameObjectWithTag("shiftyslider").GetComponent<UnityEngine.UI.Slider>().value = shifty;
-
+  
 
         GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = true;
         GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn = false;
@@ -171,32 +166,8 @@ public class UiFunctions : MonoBehaviour
         GameObject.FindGameObjectWithTag("contribslider").GetComponent<UnityEngine.UI.Slider>().value = contribSet;
     }
 
-    public void setShiftX()    // ShiftX wird per Slider verändert
-    {
-        GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text =
-            GameObject.FindGameObjectWithTag("shiftxslider").GetComponent<UnityEngine.UI.Slider>().value.ToString();
-    }
+   
 
-    public void setShiftXField()    // ShiftX wird per Field verändert
-    {
-        string shiftxStr = GameObject.FindGameObjectWithTag("shiftx").GetComponent<UnityEngine.UI.InputField>().text;
-        int shiftxSet = int.Parse(shiftxStr);
-        GameObject.FindGameObjectWithTag("shiftxslider").GetComponent<UnityEngine.UI.Slider>().value = shiftxSet;
-    }
-
-
-    public void setShiftY()     // ShiftY wird per Slider verändert
-    {
-        GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text =
-            GameObject.FindGameObjectWithTag("shiftyslider").GetComponent<UnityEngine.UI.Slider>().value.ToString();
-    }
-
-    public void setShiftYField()     // ShiftY wird per Field verändert
-    {
-        string shiftyStr = GameObject.FindGameObjectWithTag("shifty").GetComponent<UnityEngine.UI.InputField>().text;
-        int shiftySet = int.Parse(shiftyStr);
-        GameObject.FindGameObjectWithTag("shiftyslider").GetComponent<UnityEngine.UI.Slider>().value = shiftySet;
-    }
 
 
     public void setOutput()     // Output wird per Slider verändert

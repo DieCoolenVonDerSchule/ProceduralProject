@@ -52,7 +52,7 @@ public class DecorationFunctions : MonoBehaviour
 
         catch(System.Exception e)
         {
-            print("LISTE WAR NULL");
+            print("LISTE WAR NULL "+e);
         }
       
         if (this.plantList == null) this.plantList = new ArrayList();
