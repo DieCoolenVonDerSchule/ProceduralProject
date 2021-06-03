@@ -49,6 +49,8 @@ TagManager:
   - moveleftbutton
   - moverightbutton
   - clearplants
+  - water
+  - watertoggle
   layers:
   - Default
   - TransparentFX

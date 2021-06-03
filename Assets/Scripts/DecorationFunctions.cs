@@ -20,7 +20,7 @@ public class DecorationFunctions : MonoBehaviour
     public float plantHeightMax;
     public float occurance;
     public float plantSize;
-
+    public float probalilityThreshold;
 
 
 
@@ -73,58 +73,62 @@ public class DecorationFunctions : MonoBehaviour
 
     public void placePlants (float[,] heightmap)
     {
-
-        /*
-        foreach (GameObject plant in plantList)
-        {
-            Destroy(plant);
-
-        }
-        */
-
         int x = heightmap.GetLength(0);
         int y = heightmap.GetLength(1);
 
         float startx = Random.Range(0, 1000);
         float starty = Random.Range(0, 1000);
 
+        float[,] probabilityDistribution = GameObject.FindGameObjectWithTag("heightmapbutton").
+            GetComponent<GenerationFunctions>().createHeightMapPerlinNoiseCS(x, y, scale, startx, starty, 0, 0);
 
-        
+        float max = 0f;
+        float min = 1000f;
 
-        float[,] probabilityDistribution = GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<GenerationFunctions>().createHeightMapPerlinNoiseCS(x, y, scale, startx, starty, 0, 0);
-
-
-        
 
         for (int i=0; i<x; i++)
         {
             for (int j=0; j<y; j++)
             {
-              
-                if (heightmap[i,j] > plantHeightMin && heightmap[i,j] < plantHeightMax)
-                {
 
-                    if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j], GetComponent<MeshGenerator>());
-
-                  //  if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * Mathf.Pow(probabilityDistribution[i, j],2)*occurance) putPlant(i, j, heightmap[i, j], this.transform.GetComponent<MeshGenerator>());
-
-                          
-
-                }
-
+                if (probabilityDistribution[i, j]>max) max=probabilityDistribution[i,j];
+                if (probabilityDistribution[i, j]<min) min=probabilityDistribution[i,j];
             }
         }
 
-        print("ADDED TO PLANTLIST (PLACE): " + plantList.Count);
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+
+                probabilityDistribution[i, j] = Mathf.InverseLerp(min,max,probabilityDistribution[i,j]);
+            }
+        }
+
+
+        for (int i=0; i<x; i++)
+        {
+            for (int j=0; j<y; j++)
+            {
+                if (heightmap[i,j] > plantHeightMin && heightmap[i,j] < plantHeightMax && 
+                    probabilityDistribution[i,j] > probalilityThreshold)
+                {
+                    if (Random.value < (1 - Mathf.Pow(heightmap[i, j], 0.25f)) * 
+                        Mathf.Pow(probabilityDistribution[i, j], 2) * occurance)
+                    { putPlant(i, j, heightmap[i, j], GetComponent<MeshGenerator>()); }    
+                }
+            }
+        }
     }
 
 
     void putPlant(int x, int y, float height, MeshGenerator meshgen)
     {
 
-        
+        string outputStr = GameObject.FindGameObjectWithTag("output").
+            GetComponent<UnityEngine.UI.InputField>().text;
 
-        string outputStr = GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text;
         float output = float.Parse(outputStr);
 
 
@@ -137,24 +141,12 @@ public class DecorationFunctions : MonoBehaviour
         float scaleY = meshgen.transform.localScale.z;
 
 
-
         toPlace.transform.localScale = new Vector3(0.5f*plantSize, 0.5f*plantSize, 0.5f);
 
 
-        
-        this.plantList.Add(Instantiate(toPlace, new Vector3(x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f)));
-
-        //print("PLANT LIST (PUT): "+this.plantList.Count);
-
-        
-
-
-    
-
-
-
-
-
+        this.plantList.Add(Instantiate(toPlace, new Vector3
+            (x * scaleX + offsetX, height * scaleHeight * output + offsetHeight, y * scaleY + offsetY), 
+            Quaternion.Euler(0f, -90f+Random.Range(-20f, 20f), 0f)));
     }
 
 

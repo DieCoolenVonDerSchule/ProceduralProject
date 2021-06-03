@@ -18,6 +18,8 @@ public class GenerationFunctions : MonoBehaviour
 
     public MeshGenerator meshgen;
 
+    public GameObject wasser;
+    public float wasserspiegel;
 
 
     public struct PerlinInfo
@@ -92,10 +94,12 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-    public float[,] createHeightMapPerlinNoiseCS(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+    public float[,] createHeightMapPerlinNoiseCS(
+            int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
 
-        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("START COMPUTE SHADER");
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) 
+           { print("START COMPUTE SHADER"); }
 
         PerlinInfo[] data = new PerlinInfo[x * y];
         float[] output = new float[x * y];
@@ -135,13 +139,15 @@ public class GenerationFunctions : MonoBehaviour
             }
         }
 
-        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("END COMPUTE SHADER");
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        { print("END COMPUTE SHADER"); }
 
         return heightmap;
     }
 
 
-    public static float[,] createHeightMapPerlinNoise(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+    public static float[,] createHeightMapPerlinNoise(
+                 int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
             
         float[,] heightmap = new float[x, y];
@@ -160,7 +166,8 @@ public class GenerationFunctions : MonoBehaviour
 
 
 
-    public static float[,] createHeightMapPerlinNoiseJobs(int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
+    public static float[,] createHeightMapPerlinNoiseJobs(
+          int x, int y, float scale, float startx, float starty, float shiftx, float shifty)
     {
 
         var perlinInfoArray = new NativeArray<PerlinInfo>(x * y, Allocator.Persistent);
@@ -170,7 +177,8 @@ public class GenerationFunctions : MonoBehaviour
         {
             for (int j = 0; j < y; j++)
             {
-                perlinInfoArray[i * y + j] = new PerlinInfo(x, y, scale, startx, starty, shiftx + i, shifty + j);
+                perlinInfoArray[i * y + j] = 
+                       new PerlinInfo(x, y, scale, startx, starty, shiftx + i, shifty + j);
             }
         }
 
@@ -184,7 +192,6 @@ public class GenerationFunctions : MonoBehaviour
         jobHandle.Complete();
 
         float[,] heightmap = new float[x, y];
-
 
 
         for (int i = 0; i < x; i++)
@@ -226,6 +233,7 @@ public class GenerationFunctions : MonoBehaviour
 
     public void GenerateStart()
     {
+        
         GeneratePerlinNoise(meshgen);
         Movement.initializeConstants();
     }
@@ -249,7 +257,6 @@ public class GenerationFunctions : MonoBehaviour
         float contribution = float.Parse(contributionInput);
 
 
-
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
             print("scaleInput: " + scaleInput);
@@ -269,15 +276,9 @@ public class GenerationFunctions : MonoBehaviour
         bool shaderIsOn = (GameObject.FindGameObjectWithTag("shadertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
         bool threadingIsOn = (GameObject.FindGameObjectWithTag("threadingtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn);
 
-
-
-
         initializeConstants(mapcount);
        
          
-
-
-
         for (int i=0; i<mapcount; i++)
         {
             
@@ -288,6 +289,7 @@ public class GenerationFunctions : MonoBehaviour
 
 
         float[,] heightmapCombined = new float[x, y];
+
         for (int i=0; i<mapcount; i++)
         {
             for (int j=0; j<x; j++)
@@ -320,48 +322,44 @@ public class GenerationFunctions : MonoBehaviour
                 heightmapCombined[i, j] = Mathf.InverseLerp(lowest, highest, heightmapCombined[i, j]);
             }
         }
-
-       
-
-        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
-        {
-            debugHeightMap(heightmapCombined);          
-        }
-
+               
+        if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) debugHeightMap(heightmapCombined);      
 
 
         meshgen.generateMesh(heightmapCombined);
-
-
 
 
         if (GameObject.FindGameObjectWithTag("plantstoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
 
 
-            //    Pflanzen platzieren: SONNENBLUME
-            
-            //meshgen.GetComponent<DecorationFunctions>().placePlants(heightmapCombined);
-            
-
-
+  
             foreach(DecorationFunctions decfun in meshgen.GetComponents<DecorationFunctions>())
             {
                 decfun.placePlants(heightmapCombined);
-               // print("ES IST PASSIERT");
             }
+        }         
+
+        if (GameObject.FindGameObjectWithTag("watertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+
+            Vector3 wasserPos = meshgen.transform.position;
+            Vector3 wasserScale = new Vector3(x* meshgen.transform.localScale.x, wasserspiegel, y*meshgen.transform.localScale.z);
 
 
-            //    Pflanzen platzieren: BAUM
-            //    GameObject.FindGameObjectWithTag("heightmapbutton").GetComponent<DecorationFunctions>().placePlants2(heightmapCombined, plantscale, plantHeightMinDefault, plantHeightMaxDefault, seedRadius, seedProbability);
+            wasserPos.x += x*0.5f* meshgen.transform.localScale.x;
+            wasserPos.z += y*0.5f* meshgen.transform.localScale.z;
+
+
+
+            wasser.transform.position = wasserPos;
+
+            wasser.transform.localScale = wasserScale;
+
 
 
 
         }
-
-            
-
-
     }
 
     
@@ -419,6 +417,7 @@ public class GenerationFunctions : MonoBehaviour
             startwerte[i] = new Vector2(Random.Range(0, 1000), Random.Range(0, 1000));
         }
 
+    
         GeneratePerlinNoise(meshgen);
     }
 

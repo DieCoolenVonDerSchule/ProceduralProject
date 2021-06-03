@@ -20,6 +20,11 @@ RWStructuredBuffer<float> output;
 void computeHeightMap (uint3 id : SV_DispatchThreadID)
 {
    
-	output[id.x] = snoise(float2(dataBuffer[id.x].startx + (dataBuffer[id.x].shiftx) * dataBuffer[id.x].scale, dataBuffer[id.x].starty + (dataBuffer[id.x].shifty) * dataBuffer[id.x].scale));
+	output[id.x] = snoise(float2(dataBuffer[id.x].startx + (dataBuffer[id.x].shiftx) * 
+                   dataBuffer[id.x].scale, dataBuffer[id.x].starty + (dataBuffer[id.x].shifty) * 
+                   dataBuffer[id.x].scale));
 
 }
+
+
+

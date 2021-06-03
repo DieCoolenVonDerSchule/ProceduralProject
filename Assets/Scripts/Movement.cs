@@ -101,7 +101,6 @@ public class Movement : MonoBehaviour
     public void moveUp(float speed)
     {
 
-       
         Vector3 pos = camera.transform.position;
         
         pos.z += speed*Time.deltaTime;
@@ -112,61 +111,31 @@ public class Movement : MonoBehaviour
 
             for (int i = 0; i < GenerationFunctions.startwerte.Length; i++)
             {
-
-                GenerationFunctions.startwerte[i].y += (sizey - 1)*scale * Mathf.Pow(i + 1, coarse);
-
+                GenerationFunctions.startwerte[i].y += 
+                                 (sizey - 1)*scale * Mathf.Pow(i + 1, coarse);
             }
-
-            
+ 
 
             MeshGenerator newMeshGenerator = Instantiate(meshgen);
-
             print("MESH GENERATOR INSTANCIATED");
 
-
-
-
-
-         
-
-
-
-            //newMeshGenerator.GetComponents<DecorationFunctions>().;
-
-           
-
-            
-
-
             float localScale = meshgen.transform.localScale.z;
-
-
-
             Vector3 newPosition = genPos;
             
          
             newPosition.z += (sizey - 2) * localScale;
-
-           // print(sizey);
-
             
             newMeshGenerator.transform.position = newPosition;
 
             
-            foreach(DecorationFunctions deco in newMeshGenerator.GetComponents<DecorationFunctions>())
+            foreach(DecorationFunctions deco in 
+                        newMeshGenerator.GetComponents<DecorationFunctions>())
             {
-
                 deco.inistializePlants();               
-
-
             }
             
-
-        
             generations.GeneratePerlinNoise(newMeshGenerator);
             print("PERLINNOISE GENERATED");
-
-
 
             meshGenerators.Add(newMeshGenerator);
             threshold += (sizey - 2) * localScale;
@@ -174,21 +143,11 @@ public class Movement : MonoBehaviour
 
             sectionCount++;
 
-            //
-           
-
-
-
 
             if (sectionCount == 4)
             {
-
                 //print("count: "+sectionCount);
                 print(meshGenerators.Count);
-
-
-
-
 
                 print("CALL DESTROY ALL PLANTS");
                 meshGenerators[0].destroyAllPlants();
@@ -196,21 +155,11 @@ public class Movement : MonoBehaviour
                 Destroy(meshGenerators[0].gameObject);
                 meshGenerators.RemoveAt(0);
 
-
                 sectionCount--;
-
-            }
-            
-          
-            
-
-            
-            
-        }
-
-      //  print(pos.z);
-        
+            }                     
+        }   
     }
+
 
     public void moveUp()
     {

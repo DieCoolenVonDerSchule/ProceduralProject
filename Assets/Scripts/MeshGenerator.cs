@@ -49,12 +49,10 @@ public class MeshGenerator : MonoBehaviour
 
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-      
+        GetComponent<MeshFilter>().mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;   
 
         heightMap = map;
        
-
         createShape();
         updateMesh();
     }
@@ -65,7 +63,9 @@ public class MeshGenerator : MonoBehaviour
         int y = heightMap.GetLength(1)-1;
         vertices = new Vector3[(x+1) * (y+1)];
 
-        string outputInput = GameObject.FindGameObjectWithTag("output").GetComponent<UnityEngine.UI.InputField>().text;
+        string outputInput = GameObject.FindGameObjectWithTag("output").
+            GetComponent<UnityEngine.UI.InputField>().text;
+
         float output = float.Parse(outputInput);
 
 
@@ -137,10 +137,8 @@ public class MeshGenerator : MonoBehaviour
         }
 
 
-
-                if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("vert: " + vert);
-
-
+        if (GameObject.FindGameObjectWithTag("debugtoggle").
+            GetComponent<UnityEngine.UI.Toggle>().isOn) print("vert: " + vert);
     }
 
     void updateMesh()

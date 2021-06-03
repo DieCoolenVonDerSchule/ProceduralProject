@@ -1,8 +1,6 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel generateMesh
 
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
 struct SquareInfo
 {
     int vert;
@@ -24,3 +22,6 @@ void generateMesh(uint3 id : SV_DispatchThreadID)
     output[id.x * 6 + 5] = dataBuffer[id.x].vert + dataBuffer[id.x].x + 2;
 
 }
+
+
+
