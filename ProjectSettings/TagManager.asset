@@ -51,6 +51,7 @@ TagManager:
   - clearplants
   - water
   - watertoggle
+  - water2
   layers:
   - Default
   - TransparentFX

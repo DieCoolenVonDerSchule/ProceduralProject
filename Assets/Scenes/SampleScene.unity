@@ -1218,7 +1218,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a66db5d3f2490d146b516e0228c62049, type: 2}
+  - {fileID: 2100000, guid: 73cf5362b43ad6f40aaa3f602a4b60c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3357,7 +3357,7 @@ MonoBehaviour:
   shader: {fileID: 7200000, guid: bd939506f986bb146bce217be60934a5, type: 3}
   meshgen: {fileID: 1628679738}
   wasser: {fileID: 182447819}
-  wasserspiegel: 15
+  wasserspiegel: 30
 --- !u!114 &358499340
 MonoBehaviour:
   m_ObjectHideFlags: 0
