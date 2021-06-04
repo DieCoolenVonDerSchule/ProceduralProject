@@ -5656,7 +5656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterDetailX: 500
   waterDetailY: 500
-  wasserspiegel: 2
+  wasserspiegel: 1
 --- !u!1 &906059943
 GameObject:
   m_ObjectHideFlags: 0
@@ -9482,8 +9482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toPlace: {fileID: -927199367670048503, guid: 8f8d80ee926c1734cadc527faee55c3b, type: 3}
-  scale: 2
-  plantHeightMin: 0
+  scale: 0.8
+  plantHeightMin: 0.3
   plantHeightMax: 0.4
   occurance: 0.8
   plantSize: 1
@@ -9501,10 +9501,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toPlace: {fileID: -927199367670048503, guid: a8340472164e63b449270b1f72acce23, type: 3}
-  scale: 0.01
+  scale: 0.006
   plantHeightMin: 0
   plantHeightMax: 1
-  occurance: 0.5
+  occurance: 0.4
   plantSize: 0.5
   probalilityThreshold: 0
 --- !u!114 &1628679743
@@ -9521,7 +9521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toPlace: {fileID: -927199367670048503, guid: afc36d00543c49a4c9a084344e6555cd, type: 3}
   scale: 0.01
-  plantHeightMin: 0
+  plantHeightMin: 0.3
   plantHeightMax: 1
   occurance: 0.7
   plantSize: 1
