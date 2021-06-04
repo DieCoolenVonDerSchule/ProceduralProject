@@ -343,18 +343,7 @@ public class GenerationFunctions : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("watertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
 
-            Vector3 wasserPos = meshgen.transform.position;
-            Vector3 wasserScale = new Vector3(x* meshgen.transform.localScale.x, wasserspiegel, y*meshgen.transform.localScale.z);
-
-
-            wasserPos.x += x*0.5f* meshgen.transform.localScale.x;
-            wasserPos.z += y*0.5f* meshgen.transform.localScale.z;
-
-
-
-            wasser.transform.position = wasserPos;
-
-            wasser.transform.localScale = wasserScale;
+            wasser.GetComponent<MeshRenderer>().enabled = true;
 
 
 
