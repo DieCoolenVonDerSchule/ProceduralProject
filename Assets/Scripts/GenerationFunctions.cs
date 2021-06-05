@@ -338,17 +338,15 @@ public class GenerationFunctions : MonoBehaviour
             {
                 decfun.placePlants(heightmapCombined);
             }
-        }         
+        }
+
 
         if (GameObject.FindGameObjectWithTag("watertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
         {
-
             wasser.GetComponent<MeshRenderer>().enabled = true;
 
-
-
-
         }
+
     }
 
     

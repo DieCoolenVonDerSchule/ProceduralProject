@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
 
     public Camera camera;
     public MeshGenerator meshgen;
+    public WaterFunctions water;
     public static Vector3 meshposition;
 
     public static float threshold;
@@ -24,6 +25,7 @@ public class Movement : MonoBehaviour
     public static Vector3 genPos;
 
     public static List<MeshGenerator> meshGenerators;
+    public static List<WaterFunctions> waterGenerators;
 
     public static float speed;
    
@@ -44,6 +46,12 @@ public class Movement : MonoBehaviour
         meshposition = meshgen.transform.position;
 
 
+        if (!GameObject.FindGameObjectWithTag("watertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn)
+        {
+            water.GetComponent<MeshRenderer>().enabled = false;
+           
+
+        }
 
     }
 
@@ -86,6 +94,7 @@ public class Movement : MonoBehaviour
         genPos = meshposition;
 
         meshGenerators = new List<MeshGenerator>();
+        waterGenerators = new List<WaterFunctions>();
 
        
     }
@@ -119,6 +128,8 @@ public class Movement : MonoBehaviour
             MeshGenerator newMeshGenerator = Instantiate(meshgen);
             print("MESH GENERATOR INSTANCIATED");
 
+            
+           
             float localScale = meshgen.transform.localScale.z;
             Vector3 newPosition = genPos;
             
@@ -126,7 +137,7 @@ public class Movement : MonoBehaviour
             newPosition.z += (sizey - 2) * localScale;
             
             newMeshGenerator.transform.position = newPosition;
-
+            
             
             foreach(DecorationFunctions deco in 
                         newMeshGenerator.GetComponents<DecorationFunctions>())
@@ -141,6 +152,20 @@ public class Movement : MonoBehaviour
             threshold += (sizey - 2) * localScale;
             genPos.z += (sizey - 2) * localScale;
 
+
+            bool wasserAn = GameObject.FindGameObjectWithTag("watertoggle").GetComponent<UnityEngine.UI.Toggle>().isOn;
+
+            if (wasserAn) { 
+                WaterFunctions newWaterGenerator = Instantiate(water);
+                newWaterGenerator.transform.position = newPosition;
+
+
+
+                waterGenerators.Add(newWaterGenerator);
+
+            }
+
+
             sectionCount++;
 
 
@@ -154,6 +179,12 @@ public class Movement : MonoBehaviour
 
                 Destroy(meshGenerators[0].gameObject);
                 meshGenerators.RemoveAt(0);
+
+                if (wasserAn)
+                {
+                    Destroy(waterGenerators[0].gameObject);
+                    waterGenerators.RemoveAt(0);
+                }
 
                 sectionCount--;
             }                     

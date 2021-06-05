@@ -155,9 +155,8 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateNormals();
 
         if (GameObject.FindGameObjectWithTag("debugtoggle").GetComponent<UnityEngine.UI.Toggle>().isOn) print("MESH BERECHNET");
+
         
-
-
     }
 
 

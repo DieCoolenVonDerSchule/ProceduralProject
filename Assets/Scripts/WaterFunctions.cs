@@ -9,14 +9,20 @@ public class WaterFunctions : MonoBehaviour
     Vector3[] vertices;
     int[] triangles;
 
+    Vector2[] uvs;
+
     public int waterDetailX;
     public int waterDetailY;
     public int wasserspiegel;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<MeshRenderer>().enabled = false;
+
+        print("WATER GENERATOR START");
+      //  GetComponent<MeshRenderer>().enabled = false;
         mesh = new Mesh();
 
         GetComponent<MeshFilter>().mesh = mesh;
@@ -24,6 +30,8 @@ public class WaterFunctions : MonoBehaviour
 
         createShape();
         updateShape();
+
+
     }
 
     void createShape()
@@ -60,6 +68,21 @@ public class WaterFunctions : MonoBehaviour
             }
             vert++;
         }
+
+
+        uvs = new Vector2[vertices.Length];
+
+
+        for (int i = 0, k = 0; i < waterDetailY; i++)
+        {
+
+            for (int j = 0; j < waterDetailX; j++)
+            {
+                uvs[k] = new Vector2((float)j / (waterDetailX * 0.01f), (float)i / (waterDetailY * 0.01f));
+                k++;
+
+            }
+        }
     }
 
     void updateShape()
@@ -69,6 +92,9 @@ public class WaterFunctions : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
 
+        mesh.uv = uvs;
+        mesh.RecalculateBounds();
+        mesh.RecalculateTangents();
         mesh.RecalculateNormals();
     }
 
