@@ -13,7 +13,7 @@ public class WaterFunctions : MonoBehaviour
 
     public int waterDetailX;
     public int waterDetailY;
-    public int wasserspiegel;
+    public float wasserspiegel;
 
 
 
